@@ -21,7 +21,7 @@ def lambda_handler(event, context):
     logger.info("📦 Full event received: %s", json.dumps(event))
 
     try:
-        # 🔹 处理 CORS 预检请求
+
         if event.get('httpMethod') == 'OPTIONS':
             return {
                 "statusCode": 200, 
@@ -29,7 +29,7 @@ def lambda_handler(event, context):
                 "body": json.dumps({"message": "CORS preflight"})
             }
         
-        # 解析请求体
+
         body = {}
         if 'body' in event:
             if event.get('isBase64Encoded', False):
@@ -43,7 +43,7 @@ def lambda_handler(event, context):
             except json.JSONDecodeError:
                 logger.error("❌ Failed to parse JSON body: %s", body_str)
 
-        # 获取用户名、密码和用户类型
+
         username = body.get("username", "").strip()
         password = body.get("password", "").strip()
         user_type = body.get("userType", "").strip()
@@ -65,20 +65,20 @@ def lambda_handler(event, context):
                 })
             }
 
-        # 🔹 根据用户类型确定实际登录用户名
+
         actual_login_username = username
         
         if user_type == 'enterprise':
             logger.info("🏢 Enterprise user detected, searching for user with admin_username: %s", username)
             
             try:
-                # 遍历用户池查找具有指定 custom:admin_username 的用户
+
                 found_user = None
                 paginator = cognito.get_paginator('list_users')
                 
                 for page in paginator.paginate(UserPoolId=USER_POOL_ID):
                     for user in page['Users']:
-                        # 获取每个用户的属性
+
                         user_attrs = {attr['Name']: attr['Value'] for attr in user.get('Attributes', [])}
                         admin_username = user_attrs.get('custom:admin_username', '').strip()
                         
@@ -89,7 +89,7 @@ def lambda_handler(event, context):
                         break
                 
                 if found_user:
-                    # 获取用户的 email 作为实际登录用户名
+
                     user_attrs = {attr['Name']: attr['Value'] for attr in found_user.get('Attributes', [])}
                     user_email = user_attrs.get('email', '').strip()
                     
@@ -122,13 +122,13 @@ def lambda_handler(event, context):
                     "body": json.dumps({"message": "Error processing enterprise user: " + str(e)})
                 }
         else:
-            # individual 用户直接使用前端提供的用户名
+            
             logger.info("👤 Individual user, using username directly: %s", username)
 
         logger.info("🔐 Attempting Cognito login for user: %s (actual login username: %s)", 
                    username, actual_login_username)
 
-        # 登录 Cognito
+
         auth_response = cognito.admin_initiate_auth(
             UserPoolId=USER_POOL_ID,
             ClientId=CLIENT_ID,
@@ -139,14 +139,14 @@ def lambda_handler(event, context):
             }
         )
 
-        # 获取用户属性（使用实际登录的用户名）
+
         user_response = cognito.admin_get_user(
             UserPoolId=USER_POOL_ID, 
             Username=actual_login_username
         )
         attrs = {a['Name']: a['Value'] for a in user_response['UserAttributes']}
 
-        # 🔹 构建统一返回字段
+
         user_data = {
             "username": attrs.get("email", actual_login_username),
             "email": attrs.get("email", actual_login_username),
@@ -155,20 +155,20 @@ def lambda_handler(event, context):
             "userStatus": user_response.get("UserStatus", "UNKNOWN"),
             "adminUsername": attrs.get("custom:admin_username", ""),
             "organizationType": attrs.get("custom:organization_type", ""),
-            "originalUsername": username  # 返回前端提供的原始用户名
+            "originalUsername": username  
         }
 
         logger.info("✅ Login successful - Original: %s, Actual: %s", 
                    username, actual_login_username)
         
-        # 统一返回格式 - 直接返回用户数据
+
         return {
             "statusCode": 200, 
             "headers": headers, 
             "body": json.dumps(user_data)
         }
 
-    # Cognito 异常处理
+
     except cognito.exceptions.NotAuthorizedException:
         logger.error("❌ NotAuthorizedException for user: %s (actual: %s)", 
                    username, actual_login_username if 'actual_login_username' in locals() else username)

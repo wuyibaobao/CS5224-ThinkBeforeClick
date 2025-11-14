@@ -18,11 +18,9 @@ def _cors():
     }
 
 def _resp(status, body):
-    # Body must be a STRING for API Gateway proxy integration.
     return {"statusCode": status, "headers": _cors(), "body": json.dumps(body)}
 
 def lambda_handler(event, _ctx):
-    # Path param e.g. /company-report/{companyId}/history
     pp = (event.get("pathParameters") or {})
     qs = (event.get("queryStringParameters") or {})
     cid = (
@@ -31,14 +29,11 @@ def lambda_handler(event, _ctx):
     )
     if not cid:
         return _resp(400, {"error": "companyId required"})
-    # cid = (event.get("pathParameters") or {}).get("companyId")
-    # if not cid:
-    #     return _resp(400, {"error": "companyId required"})
+
 
     prefix = f"{REPORT_ROOT}{cid}/"
     items = []
 
-    # List PDFs under enterprise/report/<companyId>/
     paginator = s3.get_paginator("list_objects_v2")
     total = 0
     for page in paginator.paginate(Bucket=BUCKET, Prefix=prefix):
@@ -52,11 +47,8 @@ def lambda_handler(event, _ctx):
                     "lastModified": obj.get("LastModified").astimezone(timezone.utc).isoformat()
                 })
 
-    # newest first
     items.sort(key=lambda r: r["lastModified"], reverse=True)
 
-    # a couple of cheap logs to confirm
     print(f"[history] companyId={cid} prefix={prefix} total={total} pdfs={len(items)}")
 
-    # IMPORTANT: return a **pure JSON array** (which your frontend expects)
     return _resp(200, items)

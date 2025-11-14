@@ -23,7 +23,6 @@ def resp(status, body):
     }
 
 def get_code(event):
-    # JSON body
     if event.get("body"):
         raw = event["body"]
         if event.get("isBase64Encoded"):
@@ -32,12 +31,10 @@ def get_code(event):
             return (json.loads(raw).get("code") or "").strip()
         except json.JSONDecodeError:
             return ""
-    # or query string ?code=...
     qs = event.get("queryStringParameters") or {}
     return (qs.get("code") or "").strip()
 
 def lambda_handler(event, context):
-    # Preflight
     if event.get("httpMethod") == "OPTIONS":
         return resp(200, {"ok": True})
 

@@ -27,13 +27,11 @@ def lambda_handler(event, _ctx):
     if not cid or not name:
         return _bad("companyId and name are required")
 
-    # basic sanitization to prevent path traversal
     if "/" in name or "\\" in name or ".." in name:
         return _bad("invalid name")
 
     key = f"{REPORT_ROOT}{cid}/{name}"
 
-    # ensure it exists (optional but helpful)
     try:
         s3.head_object(Bucket=BUCKET, Key=key)
     except Exception:
@@ -45,7 +43,6 @@ def lambda_handler(event, _ctx):
         ExpiresIn=PRESIGNED_TTL,
     )
 
-    # 302 redirect to the presigned URL; browser follows it
     return {
         "statusCode": 302,
         "headers": {**_cors(), "Location": url}

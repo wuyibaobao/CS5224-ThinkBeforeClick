@@ -7,18 +7,16 @@ PREFIX = os.environ.get('REPORTS_PREFIX')
 
 def lambda_handler(event, context):
     try:
-        # API Gateway proxy event
         path_params = event.get('pathParameters') or {}
         company_id = path_params.get('companyId')
         if not company_id:
             return _resp(400, {"error": "companyId path param is required"})
 
         body = json.loads(event.get('body') or '{}')
-        pdf_b64 = body.get('pdfBase64')  # either plain base64 or data URL
+        pdf_b64 = body.get('pdfBase64') 
         if not pdf_b64:
             return _resp(400, {"error": "pdfBase64 is required"})
 
-        # Strip data URL prefix if present: "data:application/pdf;base64,..."
         if ',' in pdf_b64:
             pdf_b64 = pdf_b64.split(',', 1)[1]
 
@@ -36,7 +34,6 @@ def lambda_handler(event, context):
             Metadata={"companyId": company_id, "timestamp": ts}
         )
 
-        # presigned URL (1 hour)
         url = s3.generate_presigned_url(
             "get_object",
             Params={"Bucket": BUCKET, "Key": key},

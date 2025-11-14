@@ -42,7 +42,6 @@ def _ensure_cognito_user_first(email: str) -> dict:
     if not COGNITO_USER_POOL_ID:
         return {"error":"InvalidConfig","message":"Missing COGNITO_USER_POOL_ID"}
 
-    # Try find by email alias
     try:
         found = cognito.list_users(
             UserPoolId=COGNITO_USER_POOL_ID,
@@ -61,7 +60,6 @@ def _ensure_cognito_user_first(email: str) -> dict:
         err = e.response["Error"]
         return {"error": err.get("Code"), "message": err.get("Message"), "stage":"ListUsers"}
 
-    # Create new (no invite email)
     username = _gen_username()
     try:
         cognito.admin_create_user(
@@ -98,7 +96,6 @@ def _ensure_cognito_user_first(email: str) -> dict:
         err = e.response["Error"]
         return {"error": err.get("Code"), "message": err.get("Message"), "stage":"AdminCreateUser"}
 
-    # Set permanent default password -> Confirmed
     try:
         cognito.admin_set_user_password(
             UserPoolId=COGNITO_USER_POOL_ID,
@@ -132,22 +129,19 @@ def lambda_handler(event, context):
         users_tbl     = dynamodb.Table(USERS_TABLE)
         employees_tbl = dynamodb.Table(EMPLOYEES_TABLE)
 
-        # 1) Cognito FIRST
         cog = _ensure_cognito_user_first(email)
         if "error" in cog:
             return _resp(502, {"error":"CognitoFailed","details":cog})
         cognito_username = cog["username"]
-        cognito_sub      = cog["sub"]   # canonical user ID
+        cognito_sub      = cog["sub"]
 
-        # generate employeeId; time now
         employee_id = f"emp_{uuid.uuid4().hex[:12]}"
         now_iso = datetime.utcnow().isoformat()
 
-        # 2) USERS: PK = sub, DO NOT store cognitoSub attribute (avoid duplication)
         try:
             users_tbl.put_item(
                 Item={
-                    "userId": cognito_sub,              # PK = sub
+                    "userId": cognito_sub,
                     "accountType": "employee",
                     "companyId": company_id,
                     "email": email,
@@ -173,7 +167,6 @@ def lambda_handler(event, context):
             else:
                 raise
 
-        # 3) EMPLOYEES (keep your check)
         dup = employees_tbl.scan(
             FilterExpression=Attr("companyId").eq(company_id) & Attr("email").eq(email)
         ).get("Items", [])
@@ -196,7 +189,7 @@ def lambda_handler(event, context):
             "message": "Employee added",
             "employee": emp_item,
             "user": {
-                "userId": cognito_sub,                # == sub; no separate cognitoSub attribute
+                "userId": cognito_sub,
                 "accountType": "employee",
                 "companyId": company_id,
                 "email": email,

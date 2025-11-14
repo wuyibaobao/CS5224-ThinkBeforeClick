@@ -11,18 +11,15 @@ from datetime import datetime
 from decimal import Decimal
 import os
 
-# Initialize AWS clients
+
 dynamodb = boto3.resource('dynamodb')
 
-# Environment variables
 EMAIL_TRACKING_TABLE = os.environ.get('EMAIL_TRACKING_TABLE', 'ThinkBeforeClick-EmailTracking')
 EMPLOYEES_TABLE = os.environ.get('EMPLOYEES_TABLE', 'ThinkBeforeClick-Employees')
 
-# Custom JSON encoder to handle Decimal types from DynamoDB
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Decimal):
-            # Convert Decimal to int if it's a whole number, otherwise to float
             return int(obj) if obj % 1 == 0 else float(obj)
         return super(DecimalEncoder, self).default(obj)
 
@@ -36,7 +33,6 @@ def lambda_handler(event, context):
     }
     """
     try:
-        # Get tracking ID from path parameters
         tracking_id = event.get('pathParameters', {}).get('trackingId')
         
         if not tracking_id:
@@ -50,8 +46,7 @@ def lambda_handler(event, context):
                     'error': 'Missing tracking ID'
                 })
             }
-        
-        # Get tracking record from DynamoDB
+
         tracking_table = dynamodb.Table(EMAIL_TRACKING_TABLE)
         response = tracking_table.get_item(
             Key={'trackingId': tracking_id}
@@ -70,12 +65,10 @@ def lambda_handler(event, context):
             }
         
         tracking_record = response['Item']
-        
-        # Only update if not already opened (track first open only)
+
         if not tracking_record.get('isOpened', False):
             timestamp = datetime.utcnow().isoformat()
-            
-            # Update tracking record
+
             tracking_table.update_item(
                 Key={'trackingId': tracking_id},
                 UpdateExpression='SET isOpened = :opened, openedAt = :timestamp',
@@ -84,8 +77,7 @@ def lambda_handler(event, context):
                     ':timestamp': timestamp
                 }
             )
-            
-            # Update employee statistics
+
             employees_table = dynamodb.Table(EMPLOYEES_TABLE)
             employees_table.update_item(
                 Key={'employeeId': tracking_record['employeeId']},

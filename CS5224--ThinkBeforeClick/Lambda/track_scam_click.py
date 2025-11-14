@@ -11,19 +11,15 @@ from datetime import datetime
 from decimal import Decimal
 import os
 
-# Initialize AWS clients
 dynamodb = boto3.resource('dynamodb')
 
-# Environment variables
 EMAIL_TRACKING_TABLE = os.environ.get('EMAIL_TRACKING_TABLE', 'ThinkBeforeClick-EmailTracking')
 SCAM_CLICKS_TABLE = os.environ.get('SCAM_CLICKS_TABLE', 'ThinkBeforeClick-ScamClicks')
 EMPLOYEES_TABLE = os.environ.get('EMPLOYEES_TABLE', 'ThinkBeforeClick-Employees')
 
-# Custom JSON encoder to handle Decimal types from DynamoDB
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Decimal):
-            # Convert Decimal to int if it's a whole number, otherwise to float
             return int(obj) if obj % 1 == 0 else float(obj)
         return super(DecimalEncoder, self).default(obj)
 
@@ -38,7 +34,6 @@ def lambda_handler(event, context):
     }
     """
     try:
-        # Parse request body
         body = json.loads(event.get('body', '{}'))
         
         tracking_id = body.get('trackingId')
@@ -56,8 +51,7 @@ def lambda_handler(event, context):
                     'required': ['trackingId', 'scamType']
                 })
             }
-        
-        # Get tracking record from DynamoDB
+
         tracking_table = dynamodb.Table(EMAIL_TRACKING_TABLE)
         response = tracking_table.get_item(
             Key={'trackingId': tracking_id}
@@ -93,8 +87,7 @@ def lambda_handler(event, context):
                 'clickedAt': timestamp
             }
         )
-        
-        # Update tracking record with scam click
+
         tracking_table.update_item(
             Key={'trackingId': tracking_id},
             UpdateExpression='SET scamClicks = list_append(if_not_exists(scamClicks, :empty_list), :new_click)',
@@ -106,8 +99,7 @@ def lambda_handler(event, context):
                 }]
             }
         )
-        
-        # Update employee statistics
+
         employees_table = dynamodb.Table(EMPLOYEES_TABLE)
         employees_table.update_item(
             Key={'employeeId': tracking_record['employeeId']},

@@ -89,7 +89,6 @@ def lambda_handler(event, context):
     }
     """
     try:
-        # Parse request body
         body = json.loads(event.get('body', '{}'))
         
         company_id = body.get('companyId')
@@ -97,8 +96,7 @@ def lambda_handler(event, context):
         employee_email = body.get('employeeEmail')
         employee_name = body.get('employeeName')
         template_id = body.get('templateId')
-        
-        # Validate required fields
+
         if not all([company_id, employee_id, employee_email, template_id]):
             return {
                 'statusCode': 400,
@@ -111,8 +109,7 @@ def lambda_handler(event, context):
                     'required': ['companyId', 'employeeId', 'employeeEmail', 'templateId']
                 })
             }
-        
-        # Validate template exists
+
         if template_id not in TEMPLATES:
             return {
                 'statusCode': 400,
@@ -125,12 +122,10 @@ def lambda_handler(event, context):
                     'availableTemplates': list(TEMPLATES.keys())
                 })
             }
-        
-        # Generate unique tracking ID
+
         tracking_id = f"track_{uuid.uuid4().hex[:16]}"
         timestamp = datetime.utcnow().isoformat()
-        
-        # Create tracking record in DynamoDB
+
         tracking_table = dynamodb.Table(EMAIL_TRACKING_TABLE)
         tracking_table.put_item(
             Item={
@@ -146,14 +141,11 @@ def lambda_handler(event, context):
                 'scamClicks': []
             }
         )
-        
-        # Generate phishing URL with tracking ID
+
         phishing_url = f"https://{CLOUDFRONT_DOMAIN}/templates/{template_id}.html?tid={tracking_id}"
-        
-        # Get template metadata
+
         template_meta = TEMPLATES[template_id]
-        
-        # Compose email
+
         email_body = f"""
 <!DOCTYPE html>
 <html>
@@ -181,8 +173,7 @@ def lambda_handler(event, context):
 </body>
 </html>
 """
-        
-        # Send email via SES
+
         response = ses.send_email(
             Source=f"{template_meta['from_name']} <{SENDER_EMAIL}>",
             Destination={
@@ -201,16 +192,14 @@ def lambda_handler(event, context):
                 }
             }
         )
-        
-        # Update employee record (increment sent count)
+
         employees_table = dynamodb.Table(EMPLOYEES_TABLE)
         employees_table.update_item(
             Key={'employeeId': employee_id},
             UpdateExpression='ADD sentEmails :inc',
             ExpressionAttributeValues={':inc': 1}
         )
-        
-        # Return success response
+
         return {
             'statusCode': 200,
             'headers': {
