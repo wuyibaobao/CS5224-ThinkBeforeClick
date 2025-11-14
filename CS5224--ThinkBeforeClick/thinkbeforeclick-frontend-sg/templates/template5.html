@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPF Board - Urgent Account Update Required</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: white;
+            padding: 25px 40px;
+            border-bottom: 5px solid #d32027;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-img {
+            width: 70px;
+            height: 70px;
+            background: #d32027;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .logo-text h1 {
+            color: #d32027;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .logo-text p {
+            color: #666;
+            font-size: 13px;
+        }
+        .header-right {
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+        }
+        .alert-strip {
+            background: #fff3cd;
+            border-top: 3px solid #ffc107;
+            border-bottom: 3px solid #ffc107;
+            padding: 20px 40px;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { background: #fff3cd; }
+            50% { background: #ffe69c; }
+        }
+        .alert-text {
+            color: #856404;
+            font-weight: 700;
+            font-size: 17px;
+        }
+        .content {
+            padding: 45px 40px;
+        }
+        .warning-icon-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .warning-icon {
+            font-size: 72px;
+        }
+        h2 {
+            color: #d32027;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 30px;
+        }
+        .message-box {
+            background: #f8f9fa;
+            border-left: 5px solid #d32027;
+            padding: 25px;
+            margin: 25px 0;
+            line-height: 1.8;
+            color: #333;
+        }
+        .message-box p {
+            margin: 15px 0;
+        }
+        .highlight {
+            color: #d32027;
+            font-weight: bold;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .info-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .info-card:hover {
+            border-color: #d32027;
+            box-shadow: 0 4px 15px rgba(211, 32, 39, 0.1);
+        }
+        .info-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .info-title {
+            font-weight: 700;
+            color: #212529;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .info-text {
+            color: #6c757d;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .deadline-box {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border: 3px solid #d32027;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .deadline-label {
+            font-size: 18px;
+            color: #c62828;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .deadline-date {
+            font-size: 42px;
+            font-weight: 900;
+            color: #d32027;
+            margin: 15px 0;
+        }
+        .deadline-warning {
+            color: #c62828;
+            font-size: 15px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        .consequences-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        .consequences-box h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .consequences-box ul {
+            padding-left: 25px;
+        }
+        .consequences-box li {
+            color: #856404;
+            margin: 10px 0;
+            line-height: 1.7;
+        }
+        .update-btn {
+            background: linear-gradient(to right, #d32027, #e74c3c);
+            color: white;
+            width: 100%;
+            padding: 22px;
+            border: none;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: 900;
+            cursor: pointer;
+            margin: 35px 0;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(211, 32, 39, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .update-btn:hover {
+            background: linear-gradient(to right, #b71c1c, #c62828);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(211, 32, 39, 0.6);
+        }
+        .requirements-box {
+            background: #e3f2fd;
+            border-left: 4px solid #1976d2;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        .requirements-box h4 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+        .requirements-box ul {
+            padding-left: 25px;
+        }
+        .requirements-box li {
+            color: #424242;
+            margin: 10px 0;
+            line-height: 1.7;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+            line-height: 1.9;
+        }
+        .footer strong {
+            color: #212529;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            max-width: 750px;
+            width: 100%;
+            text-align: center;
+            animation: slideUp 0.6s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-icon {
+            font-size: 100px;
+            margin-bottom: 30px;
+        }
+        .scam-alert {
+            background: #ffebee;
+            border: 4px solid #f44336;
+            padding: 35px;
+            border-radius: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .scam-alert h3 {
+            color: #b71c1c;
+            margin-bottom: 25px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .scam-alert li {
+            margin: 15px 0;
+            color: #c62828;
+            line-height: 1.9;
+            font-size: 15px;
+        }
+        .safety-tips {
+            background: #e8f5e9;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .safety-tips h4 {
+            color: #1b5e20;
+            margin-bottom: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+        .safety-tips p {
+            color: #2e7d32;
+            line-height: 2;
+            font-size: 15px;
+        }
+        .close-btn {
+            background: linear-gradient(135deg, #43a047 0%, #66bb6a 100%);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <script src="tracking.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo-img">💼</div>
+                <div class="logo-text">
+                    <h1>CPF Board</h1>
+                    <p>Central Provident Fund Board</p>
+                </div>
+            </div>
+            <div class="header-right">
+                Ref: CPF/2025/UPD/78945<br>
+                Date: 19 Oct 2025
+            </div>
+        </div>
+
+        <div class="alert-strip">
+            <div class="alert-text">⚠️ URGENT: Mandatory Account Update Required</div>
+        </div>
+
+        <div class="content">
+            <div class="warning-icon-section">
+                <div class="warning-icon">🔐</div>
+            </div>
+
+            <h2>Important Security Update Notice</h2>
+
+            <div class="message-box">
+                <p><strong>Dear CPF Member,</strong></p>
+                <p>Due to recent updates to Singapore's <span class="highlight">Personal Data Protection Act (PDPA)</span> and enhanced security measures, the CPF Board requires all members to update their account information by <span class="highlight">25 October 2025</span>.</p>
+                <p>This mandatory update is part of our commitment to safeguard your CPF savings and prevent unauthorized access to your retirement funds.</p>
+                <p><span class="highlight">Failure to complete this update may result in temporary suspension of your CPF account services.</span></p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🛡️</div>
+                    <div class="info-title">Enhanced Security</div>
+                    <div class="info-text">Updated encryption protocols to protect your S$400,000+ in CPF savings</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">✅</div>
+                    <div class="info-title">PDPA Compliance</div>
+                    <div class="info-text">Mandatory update as per new government regulations</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📱</div>
+                    <div class="info-title">Singpass Integration</div>
+                    <div class="info-text">Seamless verification with your Singpass account</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⏱️</div>
+                    <div class="info-title">Quick Process</div>
+                    <div class="info-text">Takes only 3-5 minutes to complete</div>
+                </div>
+            </div>
+
+            <div class="deadline-box">
+                <div class="deadline-label">⏰ Deadline for Compliance:</div>
+                <div class="deadline-date">25 Oct 2025</div>
+                <div class="deadline-warning">Only 6 days remaining to avoid account suspension</div>
+            </div>
+
+            <div class="consequences-box">
+                <h3>⚠️ Consequences of Non-Compliance:</h3>
+                <ul>
+                    <li>Temporary suspension of CPF account access</li>
+                    <li>Inability to make CPF withdrawals or housing payments</li>
+                    <li>Delayed CPF contributions from employer</li>
+                    <li>Required in-person verification at CPF Service Centre</li>
+                    <li>Potential administrative penalties</li>
+                </ul>
+            </div>
+
+            <button class="update-btn" onclick="handleScamClick('scam1', showWarning)">
+                Update My CPF Account Now
+            </button>
+
+            <div style="text-align: center; margin: 25px 0; padding: 22px; background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-radius: 12px; border: 3px solid #3b82f6;">
+                <p style="color: #1e40af; margin-bottom: 12px; font-weight: 700; font-size: 17px;">💰 Want to check your latest CPF account balance?</p>
+                <a href="javascript:void(0)" onclick="handleScamClick('scam2', showWarning)" style="color: #d32027; font-weight: bold; text-decoration: underline; cursor: pointer; font-size: 17px;">Click to view your detailed CPF account information →</a>
+            </div>
+
+            <div class="requirements-box">
+                <h4>📋 What You'll Need for the Update:</h4>
+                <ul>
+                    <li>Your NRIC/FIN number</li>
+                    <li>Registered mobile number</li>
+                    <li>Singpass credentials for verification</li>
+                    <li>Current residential address</li>
+                    <li>Email address for confirmation</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin: 20px 0; padding: 18px; background: #f0fdf4; border-radius: 10px; border: 2px solid #22c55e;">
+                <p style="color: #166534; font-size: 15px; margin-bottom: 10px; font-weight: 600;">📥 Not sure how to proceed?</p>
+                <a href="javascript:void(0)" onclick="handleScamClick('scam3', showWarning)" style="color: #d32027; font-weight: 600; text-decoration: underline; cursor: pointer; font-size: 15px;">Download detailed update guide PDF (2.3MB)</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>Central Provident Fund Board</strong><br>
+            CPF Building, 79 Robinson Road, Singapore 068897<br>
+            Contact Centre: 1800 227 1188<br>
+            Operating Hours: Mon-Fri 8am-5:30pm | Sat 8am-1pm<br><br>
+            This is an official notification from CPF Board.<br>
+            Please do not reply to this email.<br>
+            © 2025 Central Provident Fund Board. All rights reserved.
+        </div>
+    </div>
+
+    <div class="modal" id="warningModal">
+        <div class="modal-content">
+            <div class="modal-icon">🚨</div>
+            <h2 style="color: #d32027; margin-bottom: 30px; font-size: 32px;">CRITICAL WARNING: This is a CPF Scam!</h2>
+            <p style="font-size: 19px; margin-bottom: 30px;">You almost clicked on a <strong>fake CPF notification</strong> designed to steal your personal information and potentially access your life savings!</p>
+            
+            <div class="scam-alert">
+                <h3>🚩 Major Red Flags in This Scam:</h3>
+                <ul>
+                    <li><strong>Fake Urgency:</strong> CPF Board doesn't threaten account suspension for "updates"</li>
+                    <li><strong>External Links:</strong> Real CPF communications direct you to log in at cpf.gov.sg, never through email links</li>
+                    <li><strong>Mandatory Update Lie:</strong> CPF Board doesn't require periodic "security updates" via email</li>
+                    <li><strong>PDPA as Excuse:</strong> Legitimate updates are announced officially, not via surprise emails</li>
+                    <li><strong>Threats of Suspension:</strong> CPF doesn't suspend accounts without multiple official notices</li>
+                    <li><strong>Mentions Your Savings:</strong> Uses psychological pressure by mentioning S$400,000+</li>
+                    <li><strong>Asks for Singpass:</strong> CPF NEVER asks you to verify Singpass through external links</li>
+                    <li><strong>Generic Email Address:</strong> Check if it's really from @cpf.gov.sg domain</li>
+                </ul>
+            </div>
+
+            <div class="safety-tips">
+                <h4>✅ How to Protect Your CPF Account:</h4>
+                <p>
+                    <strong>1.</strong> Always access CPF services directly at <strong>www.cpf.gov.sg</strong><br>
+                    <strong>2.</strong> CPF Board NEVER asks for personal info via email or SMS links<br>
+                    <strong>3.</strong> Use official CPF mobile app for account access<br>
+                    <strong>4.</strong> Call CPF hotline 1800 227 1188 to verify any suspicious communications<br>
+                    <strong>5.</strong> Enable 2FA on your Singpass for additional protection<br>
+                    <strong>6.</strong> CPF updates are announced on official website first<br>
+                    <strong>7.</strong> Never share Singpass OTP or passwords with anyone<br>
+                    <strong>8.</strong> Report phishing attempts to CPF and ScamShield immediately
+                </p>
+            </div>
+
+            <p style="color: #ff6f00; font-weight: 700; margin-top: 25px; font-size: 18px;">
+                💰 Your CPF savings are your retirement nest egg - protect them fiercely!
+            </p>
+            
+            <button class="close-btn" onclick="closeWarning()">I Understand - Close</button>
+        </div>
+    </div>
+
+    <script>
+        function showWarning() {
+            document.getElementById('warningModal').style.display = 'flex';
+        }
+        
+        function closeWarning() {
+            document.getElementById('warningModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

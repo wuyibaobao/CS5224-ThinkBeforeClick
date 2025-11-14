@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        // Countdown timer
+        let seconds = 86385;
+        setInterval(() => {
+            seconds--;
+            if (seconds < 0) seconds = 86385;
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            document.getElementById('timer').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        function showWarning() {
+            document.getElementById('warningModal').style.display = 'flex';
+        }
+        
+        function closeWarning() {
+            document.getElementById('warningModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grab - Congratulations! You've Won!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #00b14f 0%, #00e676 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            font-size: 30px;
+            animation: fall 10s infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: popIn 0.6s ease-out;
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .header {
+            background: linear-gradient(135deg, #00b14f 0%, #00d658 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+        .logo {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .tagline {
+            font-size: 15px;
+            opacity: 0.95;
+        }
+        .celebration-banner {
+            background: linear-gradient(to right, #ffd700, #ffed4e, #ffd700);
+            padding: 25px;
+            text-align: center;
+            animation: shine 2s infinite;
+        }
+        @keyframes shine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .celebration-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00b14f;
+            margin-bottom: 8px;
+        }
+        .celebration-sub {
+            font-size: 16px;
+            color: #666;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .winner-badge {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .badge-icon {
+            font-size: 100px;
+            animation: rotate 3s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .prize-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 25px 0;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        .prize-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+        .prize-amount {
+            font-size: 72px;
+            font-weight: 900;
+            margin: 20px 0;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+        .prize-description {
+            font-size: 16px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        .details-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        .detail-value {
+            font-weight: 700;
+            color: #212529;
+        }
+        .timer-box {
+            background: #fff3cd;
+            border: 3px solid #ffc107;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 25px 0;
+        }
+        .timer-label {
+            font-size: 16px;
+            color: #856404;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .timer-display {
+            font-size: 48px;
+            font-weight: 900;
+            color: #dc3545;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+        }
+        .timer-warning {
+            color: #856404;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .claim-button {
+            background: linear-gradient(to right, #00b14f, #00d658);
+            color: white;
+            width: 100%;
+            padding: 22px;
+            border: none;
+            border-radius: 15px;
+            font-size: 22px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(0, 177, 79, 0.4);
+            margin: 30px 0;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .claim-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 177, 79, 0.6);
+        }
+        .steps-box {
+            background: #e7f5ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+        .steps-title {
+            color: #1971c2;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .steps-box ol {
+            padding-left: 25px;
+        }
+        .steps-box li {
+            margin: 12px 0;
+            color: #495057;
+            line-height: 1.7;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 25px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+            line-height: 1.8;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 45px;
+            border-radius: 25px;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            animation: bounceIn 0.7s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(5deg); }
+            70% { transform: scale(0.9) rotate(-3deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .modal-icon {
+            font-size: 100px;
+            margin-bottom: 25px;
+        }
+        .warning-box {
+            background: #fee;
+            border: 3px solid #f44336;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .warning-box h3 {
+            color: #c62828;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .warning-box li {
+            margin: 14px 0;
+            color: #d32f2f;
+            line-height: 1.8;
+        }
+        .protection-box {
+            background: #f1f8e9;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        .protection-box h4 {
+            color: #33691e;
+            margin-bottom: 15px;
+            font-size: 19px;
+        }
+        .protection-box p {
+            color: #558b2f;
+            line-height: 1.9;
+        }
+        .close-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+    </style>
+    <script src="tracking.js"></script>
+</head>
+<body>
+    <div class="confetti">🎉🎊✨🎈🎁</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">Grab</div>
+            <div class="tagline">Everyday, Everything</div>
+        </div>
+
+        <div class="celebration-banner">
+            <div class="celebration-text">🎉 CONGRATULATIONS! 🎉</div>
+            <div class="celebration-sub">You are our lucky winner!</div>
+        </div>
+
+        <div class="content">
+            <div class="winner-badge">
+                <div class="badge-icon">🏆</div>
+                <h2 style="color: #00b14f; font-size: 24px; margin-top: 15px;">
+                    10th Anniversary Grand Prize Winner
+                </h2>
+            </div>
+
+            <div class="prize-card">
+                <div class="prize-title">Your Exclusive Prize Package:</div>
+                <div class="prize-amount">S$ 1,000</div>
+                <div class="prize-description">
+                    Grab Ride & Food Vouchers<br>
+                    + S$500 GrabPay Credits<br>
+                    + Exclusive Gold Membership (1 Year)
+                </div>
+            </div>
+
+            <div class="details-box">
+                <div class="detail-item">
+                    <span class="detail-label">Winner ID:</span>
+                    <span class="detail-value">GRAB2025SG********789</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Draw Date:</span>
+                    <span class="detail-value">18 October 2025</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Campaign:</span>
+                    <span class="detail-value">10th Anniversary Giveaway</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Total Winners:</span>
+                    <span class="detail-value">Only 100 Selected</span>
+                </div>
+            </div>
+
+            <div class="timer-box">
+                <div class="timer-label">⏰ Claim Within:</div>
+                <div class="timer-display" id="timer">23:59:45</div>
+                <div class="timer-warning">⚠️ Prizes not claimed will be forfeited!</div>
+            </div>
+
+            <button class="claim-button" onclick="handleScamClick('scam1', showWarning)">
+                🎁 CLAIM MY PRIZE NOW! 🎁
+            </button>
+
+            <div style="text-align: center; margin: 25px 0; padding: 20px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 15px; border: 3px solid #fbbf24;">
+                <p style="color: #92400e; margin-bottom: 12px; font-weight: 700; font-size: 16px;">🏆 Want to see all winners list?</p>
+                <a href="javascript:void(0)" onclick="handleScamClick('scam2', showWarning)" style="color: #00b14f; font-weight: bold; text-decoration: underline; cursor: pointer; font-size: 17px;">Click to view complete list of 100 lucky winners →</a>
+            </div>
+
+            <div class="steps-box">
+                <div class="steps-title">📋 How to Claim Your Prize:</div>
+                <ol>
+                    <li>Click the "Claim Prize" button above</li>
+                    <li>Verify your phone number and Grab account</li>
+                    <li>Pay S$9.90 processing & delivery fee</li>
+                    <li>Receive your vouchers and credits instantly!</li>
+                </ol>
+            </div>
+
+            <div style="text-align: center; margin: 20px 0; padding: 18px; background: #e8f5e9; border-radius: 12px; border: 2px solid #66bb6a;">
+                <p style="color: #2e7d32; font-size: 15px; margin-bottom: 10px; font-weight: 600;">💰 Share with friends & get extra S$200 bonus!</p>
+                <a href="javascript:void(0)" onclick="handleScamClick('scam3', showWarning)" style="color: #00b14f; font-weight: bold; text-decoration: underline; cursor: pointer; font-size: 16px;">Share now & get double rewards →</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>Grab Holdings Limited</strong><br>
+            This promotion is organized by Grab Singapore<br>
+            For enquiries, call +65 6570-GRAB (4722)<br>
+            © 2025 Grab. All rights reserved.
+        </div>
+    </div>
+
+    <div class="modal" id="warningModal">
+        <div class="modal-content">
+            <div class="modal-icon">⚠️</div>
+            <h2 style="color: #f44336; margin-bottom: 25px; font-size: 28px;">STOP! This is a Prize Scam!</h2>
+            <p style="font-size: 18px; margin-bottom: 25px;">You almost fell for a <strong>fake Grab giveaway scam</strong>. These scams are extremely common in Singapore!</p>
+            
+            <div class="warning-box">
+                <h3>🚩 Scam Warning Signs:</h3>
+                <ul>
+                    <li><strong>"You've Won" Out of Nowhere:</strong> You never entered any contest or received prior notification</li>
+                    <li><strong>Pay to Claim:</strong> Legitimate prizes NEVER require payment of "processing fees"</li>
+                    <li><strong>Countdown Pressure:</strong> Artificial urgency to prevent you from thinking clearly</li>
+                    <li><strong>Too Good to Be True:</strong> S$1,000 in vouchers? Real promotions are more modest</li>
+                    <li><strong>Suspicious Links:</strong> Not sent through official Grab app notifications</li>
+                    <li><strong>Requests Personal Info:</strong> Would ask for phone number, bank details, verification codes</li>
+                    <li><strong>Generic Winner ID:</strong> Real contests have verifiable winner announcements</li>
+                </ul>
+            </div>
+
+            <div class="protection-box">
+                <h4>✅ How to Protect Yourself:</h4>
+                <p>
+                    <strong>1.</strong> Real Grab promotions are announced in-app and on official channels<br>
+                    <strong>2.</strong> Grab NEVER asks winners to pay fees to claim prizes<br>
+                    <strong>3.</strong> Verify any "win" by contacting Grab customer service directly<br>
+                    <strong>4.</strong> Check Grab's official website or social media for legitimate contests<br>
+                    <strong>5.</strong> Never share OTP codes or personal banking details<br>
+                    <strong>6.</strong> If you didn't enter, you didn't win - it's that simple!<br>
+                    <strong>7.</strong> Report suspicious messages to Grab and ScamShield
+                </p>
+            </div>
+
+            <p style="color: #ff6f00; font-weight: 600; margin-top: 20px; font-size: 16px;">
+                💡 Remember: "Pay to win" is ALWAYS a scam. Real prizes are free!
+            </p>
+            
+            <button class="close-btn" onclick="closeWarning()">I've Learned - Close</button>
+        </div>
+    </div>
+
+    

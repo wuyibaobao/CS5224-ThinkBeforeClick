@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>User Sign In</title>
+</head>
+<body>
+  <div class="logo-container">
+    <img src="./p1.png" alt="Logo">
+  </div>
+
+  <div class="container">
+    <div class="left">
+      
+      <div class="tab-switch">
+        <button class="tab active" id="individual-tab" data-target="form-individual">Individual (FREE) </button>
+        <button class="tab" id="enterprise-tab" data-target="form-enterprise">Enterprise (PAY)</button>
+      </div>
+
+      <!-- Individual login form -->
+      <div class="form form-individual active">
+        <form id="loginForm">
+          <h3>Sign in to your account</h3>
+          <label>Email address</label>
+          <input type="text" id="username" placeholder="you@example.com">
+
+          <label>Password</label>
+          <input type="password" id="password" placeholder="">
+
+          <button type="submit">Sign in</button>
+        </form>
+
+        <div class="footer">
+          <a href="#" class="switch-to-register">Create an Individual account</a>
+        </div>
+      </div>
+
+      <!-- Enterprise login form -->
+      <div class="form form-enterprise">
+        <form id="enterpriseForm">
+          <h3>Enterprise Admin sign in</h3>
+
+          <label>Company ID</label>
+          <input type="text" id="enterprise-username" placeholder="Enter your Company ID">
+
+          <label>Email address</label>
+          <input type="text" id="enterprise-email" placeholder="you@example.com">
+
+          <label>Password</label>
+          <input type="password" id="enterprise-password" placeholder="">
+
+          <button type="submit">Sign in</button>
+        </form>
+
+        <div class="footer">
+          <a href="#" class="switch-to-register">Create a new Enterprise account</a>
+        </div>
+      </div>
+
+     <!-- register form -->
+      <div class="form form-register">
+        <form id="registerForm">
+          <h3 style="margin-top: 0px;">Create a new account</h3>
+          
+           <!-- enterprise verification -->
+          <div id="enterpriseVerification" style="display:none; margin-bottom:15px;">
+            <label>Enterprise Verification Code</label>
+            <input type="text" id="enterprise-code" placeholder="Enter your enterprise verification code">
+            <button type="button" id="verifyEnterpriseCode" style="margin-top:8px;">Verify</button>
+          </div>
+        <div id="registerFields" style="display:block;">
+      <label>Email address</label>
+      <input type="text" id="register-email" placeholder="you@example.com">
+
+      <label>Password</label>
+      <input type="password" id="register-password" placeholder="">
+      <p class="password-hint" style="margin-bottom: 10px;">
+        Password should have 8+ characters, including uppercase, lowercase, number, and special character.
+      </p>
+
+
+      <div id="enterpriseFields" style="display:none; margin-top:8px;">
+        <div id="adminFields">
+          <label>Organization Type: &nbsp;
+          <select id="organization_type">
+            <option value="">Select type</option>
+            <option value="education">Education</option>
+            <option value="government">Government</option>
+            <option value="corporation">Corporation</option>
+            <option value="nonprofit">Nonprofit</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="finance">Finance / Banking</option>
+            <option value="technology">Technology / IT</option>
+            <option value="retail">Retail / E-commerce</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="consulting">Consulting</option>
+            <option value="media">Media / Entertainment</option>
+            <option value="hospitality">Hospitality / Travel</option>
+            <option value="research">Research / Lab</option>
+            <option value="other">Other</option>
+          </select></label>
+
+          <label style="margin-top: 10px;">Create Company ID</label>
+          <input type="text" id="admin-companyid" placeholder="Create your Company ID">
+        </div>
+      </div>
+
+      <button type="submit" id="registerButton">Sign up</button>
+    </div>
+  </form>
+
+      <div class="footer">
+        <a href="#" class="switch-to-login">Have an account already? Sign in</a>
+      </div>
+    </div>
+
+    </div>
+
+    <div class="right">
+      <h2>Your Shield Against Scams and Phishing</h2>
+      <p style="text-align: justify; margin:10px 25px">
+        An interactive and adaptive fraud-awareness solution for both individuals and enterprises. 
+        It combines tutorial-based learning, real-world phishing simulations, and analytics dashboards to build digital resilience.</p>
+
+      </div>
+  </div>
+
+<script>
+
+async function loginUser(username, password, userType) {
+    try {
+        if (!username?.trim() || !password?.trim()) {
+            alert('Please enter both email and password');
+            return;
+        }
+
+        const cleanUsername = username.trim();
+        const cleanPassword = password.trim();
+
+        console.log('Attempting login with:', { username: cleanUsername, userType: userType});
+
+        const response = await fetch(
+            'https://3ofmk3jge7.execute-api.ap-southeast-1.amazonaws.com/prod/login',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                  username: cleanUsername, 
+                  password: cleanPassword,
+                  userType: userType})
+            }
+        );
+
+        const text = await response.text();
+        console.log('Raw API response:', text);
+        
+        let apiResp;
+        try {
+            apiResp = JSON.parse(text);
+        } catch (err) {
+            console.error('❌ Failed to parse API response:', text);
+            alert('Login failed: Invalid server response');
+            return;
+        }
+
+
+        console.log('Parsed API response structure:', apiResp);
+
+        if (!response.ok) {
+            const errorMsg = apiResp.message || `Login failed: ${response.status}`;
+            alert(errorMsg);
+            return;
+        }
+
+        let userData;
+        
+        if (apiResp.email || apiResp.username) {
+            console.log('✅ Processing as direct user data response');
+            userData = apiResp;
+        }
+
+        else if (apiResp.statusCode && apiResp.body) {
+            console.log('✅ Processing as API Gateway proxy response');
+            
+            if (Number(apiResp.statusCode) !== 200) {
+                const errorBody = typeof apiResp.body === 'string' ? JSON.parse(apiResp.body) : apiResp.body;
+                alert(errorBody.message || `Login failed: ${apiResp.statusCode}`);
+                return;
+            }
+            
+            userData = typeof apiResp.body === 'string' ? JSON.parse(apiResp.body) : apiResp.body;
+        }
+        else {
+            console.error('❌ Unknown response format:', apiResp);
+            alert('Login failed: Unexpected server response format');
+            return;
+        }
+
+        console.log('User data to save:', userData);
+
+
+        localStorage.setItem('userEmail', userData.email || '');
+        localStorage.setItem('username', userData.username || userData.email || '');
+        localStorage.setItem('userType', userData.userType || userType || 'individual');
+        //localStorage.setItem('userRole', userData.role || '');
+        localStorage.setItem('userStatus', userData.userStatus || '');
+        localStorage.setItem('adminUsername', userData.adminUsername || '');
+        localStorage.setItem('organizationType', userData.organizationType || '');
+
+        console.log('✅ Login successful!', userData);
+
+        setTimeout(() => {
+          if (userData.userType === 'enterprise') {
+              window.location.href = './enterprise/dashboard.html';
+          } else {
+              window.location.href = './index.html';
+          }
+      }, 100);
+
+    } catch (err) {
+        console.error('❌ Login error:', err);
+        alert('Login failed. Please try again later.');
+    }
+}
+
+
+async function registerUser(email, password, userType, additionalData = {}) {
+
+  try {
+    const response = await fetch('https://3ofmk3jge7.execute-api.ap-southeast-1.amazonaws.com/prod/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: email, 
+        password,
+        attributes: {
+          email: email, 
+          'custom:user_type': userType,
+          ...additionalData
+        }
+      })
+    });
+
+    const text = await response.text();
+      console.log('Raw registration response:', text);
+      
+      let apiResp;
+      try {
+          apiResp = JSON.parse(text);
+      } catch (err) {
+          console.error('❌ Failed to parse registration response:', text);
+          throw new Error('Invalid server response');
+      }
+
+      console.log('Parsed API response:', apiResp);
+      console.log('HTTP Response status:', response.status);
+
+      let resultData;
+      
+ 
+      if (apiResp.statusCode && apiResp.body) {
+          console.log('Processing as API Gateway proxy response');
+          
+          
+          if (Number(apiResp.statusCode) >= 400) {
+              const errorBody = typeof apiResp.body === 'string' ? JSON.parse(apiResp.body) : apiResp.body;
+              const errorMessage = errorBody.error || errorBody.message || `Registration failed (Status: ${apiResp.statusCode})`;
+              throw new Error(errorMessage);
+          }
+          
+       
+          resultData = typeof apiResp.body === 'string' ? JSON.parse(apiResp.body) : apiResp.body;
+      } 
+    
+      else if (apiResp.message || apiResp.user) {
+          console.log('Processing as direct response');
+          resultData = apiResp;
+      }
+    
+      else {
+          console.error('❌ Unknown response format:', apiResp);
+          throw new Error('Unexpected server response format');
+      }
+
+      if (!response.ok) {
+          const errorMessage = resultData.error || resultData.message || `Registration failed (HTTP: ${response.status})`;
+          throw new Error(errorMessage);
+      }
+
+      console.log('✅ Registration SUCCESS:', resultData);
+      alert('✅ Registration successful! Please check your email for verification link.');
+      switchToLogin();
+      
+  } catch (err) {
+      console.error('❌ Registration error:', err);
+      alert(`❌ ${err.message}`);
+  }
+}
+
+
+const tabs = document.querySelectorAll('.tab');
+const forms = document.querySelectorAll('.form');
+const switchToRegisterLinks = document.querySelectorAll('.switch-to-register');
+const switchToLoginLinks = document.querySelectorAll('.switch-to-login');
+let lastActiveTab = 'individual-tab';
+
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+
+    forms.forEach(f => f.classList.remove('active'));
+    const target = tab.dataset.target;
+    document.querySelector(`.${target}`).classList.add('active');
+
+    lastActiveTab = tab.id;
+    updateEnterpriseFields();
+  });
+});
+
+function updateEnterpriseFields() {
+  const enterpriseFields = document.getElementById('enterpriseFields');
+  enterpriseFields.style.display = (lastActiveTab === 'enterprise-tab') ? 'block' : 'none';
+}
+
+
+let enterpriseVerified = false; 
+
+function switchToRegister() {
+  forms.forEach(f => f.classList.remove('active'));
+  document.querySelector('.form-register').classList.add('active');
+  updateEnterpriseFields();
+
+  const verificationDiv = document.getElementById('enterpriseVerification');
+  const registerFields = document.getElementById('registerFields');
+  const enterpriseFields = document.getElementById('enterpriseFields');
+
+  if (lastActiveTab === 'enterprise-tab') {
+   
+    verificationDiv.style.display = 'block';
+    registerFields.style.display = 'none';
+    enterpriseFields.style.display = 'none';
+    enterpriseVerified = false;
+  } else {
+ 
+    verificationDiv.style.display = 'none';
+    registerFields.style.display = 'block';
+    enterpriseFields.style.display = 'none';
+  }
+}
+function switchToLogin() {
+  forms.forEach(f => f.classList.remove('active'));
+
+  if (lastActiveTab === 'enterprise-tab') {
+    document.querySelector('.form-enterprise').classList.add('active');
+  } else {
+    document.querySelector('.form-individual').classList.add('active');
+  }
+
+
+  const verificationDiv = document.getElementById('enterpriseVerification');
+  const registerFields = document.getElementById('registerFields');
+  const enterpriseFields = document.getElementById('enterpriseFields');
+
+  verificationDiv.style.display = 'none';
+  registerFields.style.display = 'none';
+  enterpriseFields.style.display = 'none';
+}
+
+
+document.getElementById('verifyEnterpriseCode').addEventListener('click', async () => {
+  const code = document.getElementById('enterprise-code').value.trim();
+  if (!code) {
+    alert('Please enter the verification code.');
+    return;
+  }
+
+  try {
+
+    const response = await fetch('https://3ofmk3jge7.execute-api.ap-southeast-1.amazonaws.com/prod/verify-code', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code })  
+    });
+
+    const text = await response.text();
+    console.log('Raw API response:', text);
+
+    let apiResp;
+    try {
+      apiResp = JSON.parse(text);
+    } catch (err) {
+      console.error('❌ Failed to parse API response:', text);
+      alert('Server returned invalid response.');
+      return;
+    }
+
+
+    const body = apiResp.body 
+      ? (typeof apiResp.body === 'string' ? JSON.parse(apiResp.body) : apiResp.body)
+      : apiResp;
+
+    console.log('Parsed verification body:', body);
+
+    if (!response.ok || !body.ok || body.status !== 'valid') {
+      alert(`❌ Verification failed: ${body.message || 'Invalid verification code.'}`);
+      return;
+    }
+
+    alert('✅ Verification successful!');
+    enterpriseVerified = true;
+
+  
+    document.getElementById('enterpriseVerification').style.display = 'none';
+    document.getElementById('registerFields').style.display = 'block';
+    document.getElementById('enterpriseFields').style.display = 'block';
+
+  } catch (err) {
+    console.error('❌ Verification error:', err);
+    alert('Verification failed. Please try again later.');
+  }
+});
+
+switchToRegisterLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    switchToRegister();
+  });
+});
+
+switchToLoginLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    switchToLogin();
+  });
+});
+
+
+document.getElementById('loginForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const userType = 'individual';
+  loginUser(username, password, userType);
+});
+
+document.getElementById('enterpriseForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const username = document.getElementById('enterprise-username').value.trim();
+  const password = document.getElementById('enterprise-password').value.trim();
+  const userType = 'enterprise';
+  loginUser(username, password, userType);
+});
+
+document.getElementById('registerForm').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const email = document.getElementById('register-email').value.trim();
+  const password = document.getElementById('register-password').value.trim();
+  const userType = lastActiveTab === 'enterprise-tab' ? 'enterprise' : 'individual';
+
+  if (!email || !password) {
+    alert('Please fill in both email and password.');
+    return;
+  }
+
+
+  if (userType === 'enterprise' && !enterpriseVerified) {
+    alert('Please verify your enterprise code first.');
+    return;
+  }
+
+  const additionalData = {};
+  if (userType === 'enterprise') {
+    const orgType = document.getElementById('organization_type').value.trim();
+    const adminCompanyid = document.getElementById('admin-companyid').value.trim();
+    if (!adminCompanyid) {
+      alert('Please enter your Company ID.');
+      return;
+    }
+
+    additionalData['custom:organization_type'] = orgType || 'unspecified';
+    additionalData['custom:admin_username'] = adminCompanyid;
+  }
+
+  await registerUser(email, password, userType, additionalData);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateEnterpriseFields();
+});
+</script>
+
+</body>
+</html>

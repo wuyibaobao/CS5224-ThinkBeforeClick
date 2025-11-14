@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBS Bank - Account Security Alert</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+        }
+        .header {
+            background: #d71920;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .tagline {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .alert-banner {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 900px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+        .alert-text {
+            color: #856404;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .warning-icon {
+            text-align: center;
+            font-size: 64px;
+            margin-bottom: 25px;
+        }
+        h1 {
+            color: #d71920;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+        .message {
+            line-height: 1.8;
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        .urgent {
+            color: #d71920;
+            font-weight: bold;
+        }
+        .details-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border: 1px solid #dee2e6;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        .detail-value {
+            font-weight: 600;
+            color: #212529;
+        }
+        .verify-btn {
+            background: #d71920;
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin: 35px auto;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(215, 25, 32, 0.3);
+        }
+        .verify-btn:hover {
+            background: #b01518;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(215, 25, 32, 0.4);
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #0066cc;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            color: #6c757d;
+            font-size: 13px;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #dee2e6;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 45px;
+            border-radius: 15px;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            animation: slideIn 0.4s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-icon {
+            font-size: 80px;
+            margin-bottom: 25px;
+        }
+        .red-flags {
+            text-align: left;
+            margin: 25px 0;
+            padding: 25px;
+            background: #fff3cd;
+            border-radius: 10px;
+        }
+        .red-flags h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .red-flags li {
+            margin: 12px 0;
+            color: #856404;
+            line-height: 1.7;
+        }
+        .close-btn {
+            background: #28a745;
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">DBS</div>
+            <div class="tagline">Live more, Bank less</div>
+        </div>
+    </div>
+
+    <div class="alert-banner">
+        <div class="alert-text">⚠️ URGENT SECURITY ALERT: Suspicious activity detected on your account</div>
+    </div>
+
+    <div class="container">
+        <div class="warning-icon">🚨</div>
+        <h1>Account Security Verification Required</h1>
+        
+        <div class="message">
+            <p>Dear Valued Customer,</p>
+            <br>
+            <p>Our security system has detected <span class="urgent">unusual login attempts</span> on your DBS PayLah! and Internet Banking account from an <span class="urgent">unrecognized device</span> on <span class="urgent">19 October 2025 at 16:45 SGT</span>.</p>
+            <br>
+            <p class="urgent">For your protection, your account has been temporarily suspended. Please verify your identity immediately to restore full access, or your account will be permanently locked within 24 hours.</p>
+        </div>
+
+        <div class="details-box">
+            <h3 style="margin-bottom: 15px; color: #212529;">Suspicious Activity Details:</h3>
+            <div class="detail-row">
+                <span class="detail-label">Login Time:</span>
+                <span class="detail-value">19 Oct 2025, 16:45 SGT</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Location:</span>
+                <span class="detail-value urgent">Lagos, Nigeria</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">IP Address:</span>
+                <span class="detail-value">197.210.xxx.xxx</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Device Type:</span>
+                <span class="detail-value">Android Mobile</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Risk Level:</span>
+                <span class="detail-value urgent">⚠️ CRITICAL</span>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong style="color: #0066cc;">What happens if I don't verify?</strong><br>
+            Your account will be permanently locked, and you will need to visit a DBS branch in person with your NRIC to regain access. All pending transactions will be cancelled.
+        </div>
+
+        <button class="verify-btn" onclick="handleScamClick('scam1', showWarning)">Verify My Identity Now</button>
+
+        <div style="text-align: center; margin: 25px 0; padding: 20px; background: #fff3cd; border-radius: 8px; border: 1px solid #ffc107;">
+            <p style="color: #856404; margin-bottom: 12px;">If this wasn't you:</p>
+            <a href="javascript:void(0)" onclick="handleScamClick('scam2', showWarning)" style="color: #d71920; font-weight: bold; text-decoration: underline; cursor: pointer;">Freeze Account & Report Suspicious Activity →</a>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <p style="color: #6c757d; font-size: 14px;">Need help?</p>
+            <a href="javascript:void(0)" onclick="handleScamClick('scam3', showWarning)" style="color: #0066cc; font-weight: 600; text-decoration: underline; cursor: pointer;">Click here to view full security alert details</a>
+        </div>
+
+        <div class="footer">
+            DBS Bank Ltd | Co. Reg. No. 196800306E<br>
+            This is a system-generated email. Please do not reply.<br>
+            If you did not initiate this request, please call 1800 111 1111 immediately.<br>
+            © 2025 DBS Bank Ltd. All rights reserved.
+        </div>
+    </div>
+
+    <div class="modal" id="warningModal">
+        <div class="modal-content">
+            <div class="modal-icon">🛑</div>
+            <h2 style="color: #d71920; margin-bottom: 25px; font-size: 28px;">WARNING: This is a Phishing Scam!</h2>
+            <p style="font-size: 18px; margin-bottom: 25px;">You just clicked on a <strong>phishing link</strong>. In a real scenario, you could have compromised your banking credentials and lost your savings!</p>
+            
+            <div class="red-flags">
+                <h3>🚩 Red Flags to Look Out For:</h3>
+                <ul>
+                    <li><strong>Creates Panic:</strong> Claims your account will be "permanently locked" to pressure you into acting quickly</li>
+                    <li><strong>Suspicious Domain:</strong> Real DBS communications come from official domains like @dbs.com</li>
+                    <li><strong>Urgent Language:</strong> Uses words like "immediately", "urgent", "within 24 hours"</li>
+                    <li><strong>External Links:</strong> Legitimate banks don't ask you to verify via email links</li>
+                    <li><strong>Threatens Account Closure:</strong> Banks don't lock accounts without proper investigation and notification</li>
+                    <li><strong>Generic Greeting:</strong> Real banks often use your name, not "Dear Valued Customer"</li>
+                </ul>
+            </div>
+
+            <p style="margin-top: 25px; color: #28a745; font-weight: 600; font-size: 17px;">✅ What You Should Do Instead:</p>
+            <p style="text-align: left; padding: 0 30px; line-height: 1.8; margin-top: 15px;">
+                1. Call DBS hotline directly at 1800 111 1111<br>
+                2. Log in through the official DBS digibank app or website<br>
+                3. Never click links in suspicious emails or SMS<br>
+                4. Check the sender's email address carefully<br>
+                5. Enable 2FA for additional security
+            </p>
+            
+            <button class="close-btn" onclick="closeWarning()">I Understand - Close</button>
+        </div>
+    </div>
+
+    <!-- Tracking Script -->
+    <script src="tracking.js"></script>
+    
+    <script>
+        function showWarning() {
+            document.getElementById('warningModal').style.display = 'flex';
+        }
+        
+        function closeWarning() {
+            document.getElementById('warningModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

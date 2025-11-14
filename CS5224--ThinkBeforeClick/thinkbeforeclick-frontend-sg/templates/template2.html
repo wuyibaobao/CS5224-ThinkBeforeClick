@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SingPost - Parcel Delivery Notification</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #e94a35 0%, #ff6b4a 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 550px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: #e94a35;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        .status-banner {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 18px 25px;
+            margin: 0;
+        }
+        .status-title {
+            font-weight: bold;
+            color: #856404;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .status-text {
+            color: #856404;
+            font-size: 14px;
+        }
+        .content {
+            padding: 35px;
+        }
+        .tracking-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .tracking-number {
+            background: #f8f9fa;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #e94a35;
+            margin: 20px 0;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .info-row:last-of-type {
+            border-bottom: none;
+        }
+        .label {
+            color: #6c757d;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .value {
+            font-weight: 600;
+            color: #212529;
+            text-align: right;
+        }
+        .urgent {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .fee-box {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe6e6 100%);
+            border: 2px solid #ffc107;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .fee-label {
+            color: #856404;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+        .fee-amount {
+            font-size: 42px;
+            font-weight: bold;
+            color: #dc3545;
+            margin: 15px 0;
+        }
+        .fee-note {
+            font-size: 13px;
+            color: #856404;
+            margin-top: 10px;
+        }
+        .timer {
+            background: #ffebee;
+            border: 2px solid #dc3545;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 25px 0;
+        }
+        .timer-label {
+            color: #c62828;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        .countdown {
+            font-size: 36px;
+            font-weight: bold;
+            color: #dc3545;
+            font-family: 'Courier New', monospace;
+        }
+        .pay-btn {
+            background: linear-gradient(to right, #e94a35, #ff6b4a);
+            color: white;
+            width: 100%;
+            padding: 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 19px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(233, 74, 53, 0.4);
+        }
+        .pay-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(233, 74, 53, 0.6);
+        }
+        .notice {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #6c757d;
+            text-align: center;
+            line-height: 1.7;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 45px;
+            border-radius: 20px;
+            max-width: 650px;
+            width: 100%;
+            text-align: center;
+            animation: bounceIn 0.6s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .modal-icon {
+            font-size: 90px;
+            margin-bottom: 25px;
+        }
+        .warning-box {
+            text-align: left;
+            background: #ffebee;
+            border: 3px solid #ef5350;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+        .warning-box h3 {
+            color: #c62828;
+            margin-bottom: 18px;
+            font-size: 21px;
+        }
+        .warning-box li {
+            margin: 13px 0;
+            color: #d32f2f;
+            line-height: 1.8;
+        }
+        .tips-section {
+            background: #e8f5e9;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: left;
+        }
+        .tips-section h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .tips-section p {
+            color: #388e3c;
+            line-height: 1.9;
+        }
+        .close-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 45px;
+            border: none;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+        }
+    </style>
+    <script src="tracking.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">📮 SingPost</div>
+            <div class="subtitle">Singapore Post Limited</div>
+        </div>
+
+        <div class="status-banner">
+            <div class="status-title">⚠️ Parcel Delivery Failed</div>
+            <div class="status-text">Payment required to complete delivery</div>
+        </div>
+
+        <div class="content">
+            <div class="tracking-header">
+                <h2 style="color: #212529; font-size: 22px; margin-bottom: 10px;">Your Parcel is Awaiting Payment</h2>
+            </div>
+
+            <div class="tracking-number">SG2025X789456123</div>
+
+            <div class="info-row">
+                <span class="label">Sender:</span>
+                <span class="value">Shopee International</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Weight:</span>
+                <span class="value">1.8 kg</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Delivery Address:</span>
+                <span class="value">Buona Vista, Singapore</span>
+            </div>
+            <div class="info-row">
+                <span class="label">Status:</span>
+                <span class="value urgent">Customs Clearance Required</span>
+            </div>
+
+            <div class="fee-box">
+                <div class="fee-label">GST & Customs Fee Payable:</div>
+                <div class="fee-amount">S$ 2.80</div>
+                <div class="fee-note">⚠️ Parcel will be returned to sender if not paid within 24 hours</div>
+            </div>
+
+            <div class="timer">
+                <div class="timer-label">⏰ Payment Deadline:</div>
+                <div class="countdown" id="countdown">23:47:33</div>
+            </div>
+
+            <button class="pay-btn" onclick="handleScamClick('scam1', showWarning)">
+                Pay S$2.80 Now →
+            </button>
+
+            <div style="text-align: center; margin: 25px 0; padding: 18px; background: #e7f3ff; border-radius: 10px; border: 2px solid #3b82f6;">
+                <p style="color: #1e40af; margin-bottom: 10px; font-weight: 600;">📦 Want to see your parcel photos?</p>
+                <a href="javascript:void(0)" onclick="handleScamClick('scam2', showWarning)" style="color: #e94a35; font-weight: bold; text-decoration: underline; cursor: pointer; font-size: 16px;">Click here to view actual parcel images →</a>
+            </div>
+
+            <div style="text-align: center; margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <p style="color: #495057; font-size: 14px; margin-bottom: 8px;">Wrong delivery address?</p>
+                <a href="javascript:void(0)" onclick="handleScamClick('scam3', showWarning)" style="color: #e94a35; font-weight: 600; text-decoration: underline; cursor: pointer;">Update delivery address now</a>
+            </div>
+
+            <div class="notice">
+                ⚠️ <strong>Important Notice:</strong><br>
+                Failure to pay customs fees will result in automatic return of parcel and additional S$15 return shipping charge.<br><br>
+                For enquiries: 1605 (within Singapore)<br>
+                Available 24/7
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="warningModal">
+        <div class="modal-content">
+            <div class="modal-icon">🚨</div>
+            <h2 style="color: #dc3545; margin-bottom: 25px; font-size: 28px;">STOP! This is a Delivery Scam!</h2>
+            <p style="font-size: 18px; margin-bottom: 25px;">You almost fell for a <strong>fake parcel delivery scam</strong> commonly targeting Singaporeans. This could have led to:</p>
+            
+            <div class="warning-box">
+                <h3>🚩 Common Phishing Tactics Used:</h3>
+                <ul>
+                    <li><strong>Small Amount Trick:</strong> S$2.80 seems believable and worth paying without much thought</li>
+                    <li><strong>Countdown Pressure:</strong> Creates urgency so you don't have time to verify</li>
+                    <li><strong>Fake Tracking Number:</strong> Looks authentic but cannot be verified on official SingPost website</li>
+                    <li><strong>SMS/Email Links:</strong> Real SingPost sends notifications but asks you to check via official app</li>
+                    <li><strong>Payment Page:</strong> Would steal your credit card or bank details</li>
+                    <li><strong>Return Fee Threat:</strong> Uses loss aversion to pressure quick payment</li>
+                </ul>
+            </div>
+
+            <div class="tips-section">
+                <h4>✅ How to Protect Yourself:</h4>
+                <p>
+                    <strong>1.</strong> Always verify tracking numbers on official SingPost website or app<br>
+                    <strong>2.</strong> SingPost NEVER asks for payment via SMS or email links<br>
+                    <strong>3.</strong> Check if you're actually expecting a parcel<br>
+                    <strong>4.</strong> Be suspicious of small "customs fees" for local deliveries<br>
+                    <strong>5.</strong> Contact SingPost hotline 1605 to verify any payment requests<br>
+                    <strong>6.</strong> Real customs fees are communicated through official channels
+                </p>
+            </div>
+
+            <p style="color: #ff6b00; font-weight: 600; margin-top: 20px; font-size: 16px;">
+                💡 Remember: If you haven't ordered anything, you won't receive a parcel!
+            </p>
+            
+            <button class="close-btn" onclick="closeWarning()">I've Learned - Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Countdown timer
+        let time = 85653;
+        setInterval(() => {
+            time--;
+            const hours = Math.floor(time / 3600);
+            const minutes = Math.floor((time % 3600) / 60);
+            const seconds = time % 60;
+            document.getElementById('countdown').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        function showWarning() {
+            document.getElementById('warningModal').style.display = 'flex';
+        }
+        
+        function closeWarning() {
+            document.getElementById('warningModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

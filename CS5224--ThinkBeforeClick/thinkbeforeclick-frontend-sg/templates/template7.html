@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LTA - Traffic Offence Notice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #e5e7eb;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: white;
+            padding: 25px 40px;
+            border-bottom: 6px solid #dc2626;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo {
+            width: 75px;
+            height: 75px;
+            background: #dc2626;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        .logo-text h1 {
+            color: #dc2626;
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+        .logo-text p {
+            color: #666;
+            font-size: 13px;
+        }
+        .notice-number {
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+        }
+        .notice-number strong {
+            display: block;
+            color: #dc2626;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        .warning-strip {
+            background: #fef2f2;
+            border-top: 3px solid #dc2626;
+            border-bottom: 3px solid #dc2626;
+            padding: 20px 40px;
+            text-align: center;
+        }
+        .warning-text {
+            color: #991b1b;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .content {
+            padding: 40px;
+        }
+        .offence-icon {
+            text-align: center;
+            font-size: 70px;
+            margin-bottom: 25px;
+        }
+        h2 {
+            color: #dc2626;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .message {
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .highlight {
+            color: #dc2626;
+            font-weight: bold;
+        }
+        .offence-card {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 3px solid #dc2626;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+        .offence-type {
+            font-size: 20px;
+            color: #991b1b;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .fine-amount {
+            font-size: 56px;
+            font-weight: 900;
+            color: #dc2626;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .detail-card {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+        .detail-label {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .detail-value {
+            color: #111827;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .penalty-box {
+            background: #fff7ed;
+            border: 2px solid #f97316;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+        .penalty-box h3 {
+            color: #c2410c;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .penalty-box ul {
+            padding-left: 25px;
+        }
+        .penalty-box li {
+            color: #ea580c;
+            margin: 10px 0;
+            line-height: 1.7;
+        }
+        .deadline-box {
+            background: #fee2e2;
+            border: 3px solid #dc2626;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .deadline-text {
+            font-size: 17px;
+            color: #991b1b;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .deadline-date {
+            font-size: 38px;
+            font-weight: 900;
+            color: #dc2626;
+            margin: 12px 0;
+        }
+        .pay-btn {
+            background: linear-gradient(to right, #dc2626, #b91c1c);
+            color: white;
+            width: 100%;
+            padding: 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 30px 0;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+        }
+        .pay-btn:hover {
+            background: linear-gradient(to right, #b91c1c, #991b1b);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+        }
+        .footer {
+            background: #f9fafb;
+            padding: 30px 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #6b7280;
+            line-height: 1.8;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 45px;
+            border-radius: 20px;
+            max-width: 750px;
+            width: 100%;
+            text-align: center;
+            animation: shake 0.6s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+        .modal-icon {
+            font-size: 95px;
+            margin-bottom: 25px;
+        }
+        .scam-alert {
+            background: #fef2f2;
+            border: 3px solid #ef4444;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .scam-alert h3 {
+            color: #b91c1c;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .scam-alert li {
+            margin: 14px 0;
+            color: #dc2626;
+            line-height: 1.8;
+        }
+        .protection-tips {
+            background: #ecfdf5;
+            padding: 28px;
+            border-radius: 15px;
+            margin: 28px 0;
+            text-align: left;
+        }
+        .protection-tips h4 {
+            color: #065f46;
+            margin-bottom: 18px;
+            font-size: 20px;
+        }
+        .protection-tips p {
+            color: #047857;
+            line-height: 2;
+        }
+        .close-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 28px;
+        }
+        @media (max-width: 768px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-area">
+                <div class="logo">🚦</div>
+                <div class="logo-text">
+                    <h1>LTA</h1>
+                    <p>Land Transport Authority</p>
+                </div>
+            </div>
+            <div class="notice-number">
+                Notice No:<br>
+                <strong>LTA/TF/2025/789456</strong>
+            </div>
+        </div>
+
+        <div class="warning-strip">
+            <div class="warning-text">⚠️ TRAFFIC OFFENCE NOTICE - IMMEDIATE ACTION REQUIRED</div>
+        </div>
+
+        <div class="content">
+            <div class="offence-icon">🚨</div>
+            <h2>Traffic Violation Detected</h2>
+
+            <div class="message">
+                <p>Dear Motorist,</p>
+                <br>
+                <p>Our automated enforcement system has detected a <span class="highlight">traffic violation</span> involving your vehicle. This notice is issued in accordance with the Road Traffic Act.</p>
+                <br>
+                <p><span class="highlight">Failure to settle this fine within the stipulated period will result in additional penalties and possible suspension of vehicle registration.</span></p>
+            </div>
+
+            <div class="offence-card">
+                <div class="offence-type">⚠️ SPEEDING VIOLATION ⚠️</div>
+                <div class="fine-amount">S$ 150</div>
+                <div style="text-align: center; color: #991b1b; font-size: 16px;">
+                    + 4 Demerit Points
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-card">
+                    <div class="detail-label">Vehicle Number:</div>
+                    <div class="detail-value">SXX****X</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Date & Time:</div>
+                    <div class="detail-value">18 Oct 2025, 14:32</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Location:</div>
+                    <div class="detail-value">PIE (Eastbound) KM 28.5</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Speed Detected:</div>
+                    <div class="detail-value highlight">112 km/h (Limit: 90 km/h)</div>
+                </div>
+            </div>
+
+            <div class="penalty-box">
+                <h3>⚠️ Consequences of Non-Payment:</h3>
+                <ul>
+                    <li>Late payment surcharge of 50% after 14 days</li>
+                    <li>Summons to court for non-compliance</li>
+                    <li>Possible suspension of vehicle registration</li>
+                    <li>Additional demerit points may be imposed</li>
+                    <li>Warrant of arrest may be issued</li>
+                </ul>
+            </div>
+
+            <div class="deadline-box">
+                <div class="deadline-text">⏰ Payment Deadline:</div>
+                <div class="deadline-date">3 November 2025</div>
+                <div style="margin-top: 12px; color: #991b1b; font-size: 15px; font-weight: 600;">
+                    Only 15 days remaining
+                </div>
+            </div>
+
+            <button class="pay-btn" onclick="trackAndShowWarning('lta_pay_fine')">
+                Pay Fine Online Now →
+            </button>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                <button style="background: linear-gradient(to right, #f59e0b, #d97706); color: white; padding: 15px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s;" onclick="trackAndShowWarning('lta_view_photo')">
+                    View Photo Evidence
+                </button>
+                <button style="background: linear-gradient(to right, #06b6d4, #0891b2); color: white; padding: 15px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s;" onclick="trackAndShowWarning('lta_dispute_fine')">
+                    Dispute This Fine
+                </button>
+            </div>
+
+            <div style="background: #dbeafe; padding: 20px; border-radius: 10px; margin-top: 25px;">
+                <h4 style="color: #1e40af; margin-bottom: 12px;">💳 Accepted Payment Methods:</h4>
+                <p style="color: #1e40af; font-size: 14px;">
+                    • Credit/Debit Card • PayNow • NETS • Internet Banking
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>Land Transport Authority</strong><br>
+            1 Hampshire Road, Singapore 219428<br>
+            Hotline: 1800 225 5582 (Mon-Fri: 8am-5:30pm)<br><br>
+            This is an official notice from LTA.<br>
+            © 2025 Land Transport Authority. All rights reserved.
+        </div>
+    </div>
+
+    <div class="modal" id="warningModal">
+        <div class="modal-content">
+            <div class="modal-icon">🛑</div>
+            <h2 style="color: #dc2626; margin-bottom: 28px; font-size: 30px;">STOP! This is a Traffic Fine Scam!</h2>
+            <p style="font-size: 18px; margin-bottom: 28px;">You almost clicked on a <strong>fake LTA traffic fine notification</strong> - a very common scam in Singapore!</p>
+            
+            <div class="scam-alert">
+                <h3>🚩 Red Flags in This Scam:</h3>
+                <ul>
+                    <li><strong>Email/SMS Notification:</strong> Real LTA fines are sent via registered mail to your home address</li>
+                    <li><strong>External Payment Links:</strong> Official fines are paid through OneMotoring portal only</li>
+                    <li><strong>Partial Vehicle Number:</strong> Scammers use partial numbers to make it seem legitimate</li>
+                    <li><strong>Threatens Arrest:</strong> LTA doesn't issue arrest warrants for unpaid fines via email</li>
+                    <li><strong>Urgent Payment Pressure:</strong> Creates panic with threats of immediate consequences</li>
+                    <li><strong>Generic Address:</strong> Real notices include your full name and registered address</li>
+                    <li><strong>Vague Location:</strong> Real notices include precise location with photo evidence</li>
+                </ul>
+            </div>
+
+            <div class="protection-tips">
+                <h4>✅ How to Verify Traffic Fines:</h4>
+                <p>
+                    <strong>1.</strong> Real traffic fines are sent via physical mail to your registered address<br>
+                    <strong>2.</strong> Check fines at official <strong>OneMotoring.com.sg</strong> portal<br>
+                    <strong>3.</strong> Call LTA hotline 1800 225 5582 to verify any fine notice<br>
+                    <strong>4.</strong> Real notices include your full name, NRIC, and vehicle details<br>
+                    <strong>5.</strong> Official notices include photo evidence of the offence<br>
+                    <strong>6.</strong> Payment is ONLY through OneMotoring or AXS stations<br>
+                    <strong>7.</strong> Never click payment links in emails or SMS<br>
+                    <strong>8.</strong> LTA will never ask for payment via external websites
+                </p>
+            </div>
+
+            <p style="color: #ea580c; font-weight: 600; margin-top: 22px; font-size: 17px;">
+                💡 Remember: If you didn't receive physical mail, it's likely a scam!
+            </p>
+            
+            <button class="close-btn" onclick="closeWarning()">I Understand - Close</button>
+        </div>
+    </div>
+
+    <!-- Tracking Script -->
+    <script src="tracking.js"></script>
+    
+    <script>
+        function showWarning() {
+            document.getElementById('warningModal').style.display = 'flex';
+        }
+        
+        function closeWarning() {
+            document.getElementById('warningModal').style.display = 'none';
+        }
+
+        // Track scam click when user clicks any button
+        function trackAndShowWarning(scamType) {
+            if (window.handleScamClick) {
+                window.handleScamClick(scamType, showWarning);
+            } else {
+                showWarning();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropertyGuru - Exclusive Investment Opportunity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .header {
+            background: linear-gradient(to right, #dc2626, #ef4444);
+            color: white;
+            padding: 35px 30px;
+            text-align: center;
+        }
+        .logo {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        .tagline {
+            font-size: 15px;
+            opacity: 0.95;
+        }
+        .exclusive-badge {
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            color: #78350f;
+            padding: 18px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 16px;
+            letter-spacing: 1px;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .property-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            margin-bottom: 30px;
+        }
+        .property-title {
+            font-size: 28px;
+            color: #1e293b;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .property-location {
+            text-align: center;
+            color: #64748b;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 3px solid #f59e0b;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .highlight-label {
+            font-size: 17px;
+            color: #92400e;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .highlight-value {
+            font-size: 52px;
+            font-weight: 900;
+            color: #dc2626;
+            margin: 15px 0;
+        }
+        .roi-text {
+            font-size: 16px;
+            color: #92400e;
+            margin-top: 10px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+        .feature-item {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+        }
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .feature-text {
+            font-size: 14px;
+            color: #475569;
+            font-weight: 600;
+        }
+        .urgency-box {
+            background: #fee2e2;
+            border: 3px solid #dc2626;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .urgency-text {
+            color: #991b1b;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .countdown {
+            font-size: 48px;
+            font-weight: 900;
+            color: #dc2626;
+            font-family: monospace;
+        }
+        .benefits-list {
+            background: #f0f9ff;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+        .benefits-list h3 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            font-size: 19px;
+        }
+        .benefits-list li {
+            margin: 12px 0;
+            color: #1e40af;
+            line-height: 1.7;
+        }
+        .invest-btn {
+            background: linear-gradient(to right, #dc2626, #ef4444);
+            color: white;
+            width: 100%;
+            padding: 22px;
+            border: none;
+            border-radius: 15px;
+            font-size: 22px;
+            font-weight: 900;
+            cursor: pointer;
+            margin: 30px 0;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.5);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .invest-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(220, 38, 38, 0.7);
+        }
+        .footer {
+            background: #f8fafc;
+            padding: 25px;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 45px;
+            border-radius: 25px;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            animation: flipIn 0.7s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes flipIn {
+            from {
+                transform: rotateY(90deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-icon {
+            font-size: 95px;
+            margin-bottom: 25px;
+        }
+        .warning-section {
+            background: #fef2f2;
+            border: 3px solid #f87171;
+            padding: 30px;
+            border-radius: 18px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .warning-section h3 {
+            color: #b91c1c;
+            margin-bottom: 20px;
+            font-size: 23px;
+        }
+        .warning-section li {
+            margin: 14px 0;
+            color: #dc2626;
+            line-height: 1.9;
+        }
+        .safety-section {
+            background: #f0fdf4;
+            padding: 30px;
+            border-radius: 18px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .safety-section h4 {
+            color: #15803d;
+            margin-bottom: 18px;
+            font-size: 20px;
+        }
+        .safety-section p {
+            color: #166534;
+            line-height: 2;
+        }
+        .close-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 28px;
+        }
+        @media (max-width: 640px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">PropertyGuru</div>
+            <div class="tagline">Singapore's #1 Property Portal</div>
+        </div>
+
+        <div class="exclusive-badge">
+            🔥 EXCLUSIVE PRE-LAUNCH INVESTMENT OPPORTUNITY 🔥
+        </div>
+
+        <div class="content">
+            <div class="property-image">🏢</div>
+
+            <div class="property-title">Marina Bay Luxury Residences</div>
+            <div class="property-location">📍 Prime District 1 - Marina Bay</div>
+
+            <div class="highlight-box">
+                <div class="highlight-label">Limited Pre-Launch Price:</div>
+                <div class="highlight-value">$680,000</div>
+                <div class="roi-text">✓ Guaranteed 25% ROI in 2 Years<br>✓ Developer Buy-Back Guarantee</div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🏠</div>
+                    <div class="feature-text">2-Bedroom<br>750 sqft</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🚇</div>
+                    <div class="feature-text">5 mins to<br>Raffles Place MRT</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🏊</div>
+                    <div class="feature-text">Infinity Pool<br>Sky Gym</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💼</div>
+                    <div class="feature-text">CBD Location<br>High Rental Yield</div>
+                </div>
+            </div>
+
+            <div class="urgency-box">
+                <div class="urgency-text">⚠️ ONLY 8 UNITS LEFT AT THIS PRICE!</div>
+                <div class="countdown" id="countdown">04:57:23</div>
+                <div style="margin-top: 15px; color: #991b1b; font-weight: 600;">
+                    Offer expires soon!
+                </div>
+            </div>
+
+            <div class="benefits-list">
+                <h3>💎 Exclusive Pre-Launch Benefits:</h3>
+                <ul>
+                    <li>20% below market value - limited to first 50 investors</li>
+                    <li>Guaranteed rental income of $3,500/month for 2 years</li>
+                    <li>Developer buy-back option at 25% profit after 2 years</li>
+                    <li>Zero stamp duty for the first year</li>
+                    <li>Fully furnished with premium fittings</li>
+                    <li>Direct developer allocation - no agent fees</li>
+                </ul>
+            </div>
+
+            <button class="invest-btn" onclick="trackAndShowWarning('property_guru_secure_unit')">
+                🔒 SECURE MY UNIT NOW
+            </button>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                <button style="background: linear-gradient(to right, #0891b2, #0e7490); color: white; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s;" onclick="trackAndShowWarning('property_guru_download_brochure')">
+                    📥 Download Brochure
+                </button>
+                <button style="background: linear-gradient(to right, #8b5cf6, #7c3aed); color: white; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s;" onclick="trackAndShowWarning('property_guru_schedule_viewing')">
+                    📅 Schedule Viewing
+                </button>
+            </div>
+
+            <div style="background: #fff7ed; padding: 20px; border-radius: 12px; text-align: center;">
+                <p style="color: #c2410c; font-weight: 600; font-size: 14px;">
+                    ⚡ Act fast! Only S$5,000 booking fee required to secure your investment<br>
+                    💳 Payment via PayNow or Bank Transfer
+                </p>
+            </div>
+        </div>
+
+        <div class="footer">
+            PropertyGuru Singapore Pte Ltd<br>
+            For enquiries: +65 9XXX XXXX<br>
+            © 2025 PropertyGuru. All rights reserved.
+        </div>
+    </div>
+
+    <div class="modal" id="warningModal">
+        <div class="modal-content">
+            <div class="modal-icon">⚠️</div>
+            <h2 style="color: #dc2626; margin-bottom: 28px; font-size: 30px;">DANGER! Property Investment Scam!</h2>
+            <p style="font-size: 18px; margin-bottom: 28px;">You almost fell for a <strong>fake property investment scheme</strong> - a sophisticated scam targeting Singaporeans!</p>
+            
+            <div class="warning-section">
+                <h3>🚩 Major Scam Warning Signs:</h3>
+                <ul>
+                    <li><strong>"Too Good to Be True" Returns:</strong> 25% ROI in 2 years is unrealistic in Singapore's property market</li>
+                    <li><strong>Pressure Tactics:</strong> Countdown timers and "only X units left" create false urgency</li>
+                    <li><strong>Guaranteed Returns:</strong> No legitimate property developer can guarantee rental income</li>
+                    <li><strong>Below Market Value:</strong> Prime D1 properties don't sell 20% below market price</li>
+                    <li><strong>Direct Contact Method:</strong> Real developers work through licensed property agents</li>
+                    <li><strong>Immediate Payment Request:</strong> Asking for booking fees via PayNow is a red flag</li>
+                    <li><strong>No Official Documentation:</strong> Legitimate sales require Option to Purchase and legal contracts</li>
+                    <li><strong>Unverifiable Claims:</strong> No project name, developer name, or URA approval number</li>
+                </ul>
+            </div>
+
+            <div class="safety-section">
+                <h4>✅ How to Verify Property Investments:</h4>
+                <p>
+                    <strong>1.</strong> Check developer credentials with URA and IRAS<br>
+                    <strong>2.</strong> Verify project details on URA's website<br>
+                    <strong>3.</strong> Use only licensed property agents (check CEA register)<br>
+                    <strong>4.</strong> Never pay booking fees without signed Option to Purchase<br>
+                    <strong>5.</strong> Conduct due diligence with a lawyer before any payment<br>
+                    <strong>6.</strong> Be wary of "guaranteed returns" - it's illegal in Singapore<br>
+                    <strong>7.</strong> Check PropertyGuru official website directly, don't trust emails<br>
+                    <strong>8.</strong> Report suspicious property schemes to police and CEA
+                </p>
+            </div>
+
+            <p style="color: #ea580c; font-weight: 700; margin-top: 25px; font-size: 17px;">
+                💡 Remember: If an investment opportunity seems too good to be true, it probably is!
+            </p>
+            
+            <button class="close-btn" onclick="closeWarning()">I Understand - Close</button>
+        </div>
+    </div>
+
+    <!-- Tracking Script -->
+    <script src="tracking.js"></script>
+    
+    <script>
+        // Countdown timer
+        let time = 17843;
+        setInterval(() => {
+            time--;
+            if (time < 0) time = 17843;
+            const hours = Math.floor(time / 3600);
+            const minutes = Math.floor((time % 3600) / 60);
+            const seconds = time % 60;
+            document.getElementById('countdown').textContent = 
+                `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        function showWarning() {
+            document.getElementById('warningModal').style.display = 'flex';
+        }
+        
+        function closeWarning() {
+            document.getElementById('warningModal').style.display = 'none';
+        }
+
+        // Track scam click when user clicks any button
+        function trackAndShowWarning(scamType) {
+            if (window.handleScamClick) {
+                window.handleScamClick(scamType, showWarning);
+            } else {
+                showWarning();
+            }
+        }
+    </script>
+</body>
+</html>

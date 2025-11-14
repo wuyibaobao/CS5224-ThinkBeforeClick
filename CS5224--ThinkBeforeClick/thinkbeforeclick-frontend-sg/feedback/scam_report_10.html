@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Marketplace Scams - Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #d32f2f 0%, #f44336 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(to right, #d32f2f, #f44336);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+        .header-icon { font-size: 80px; margin-bottom: 20px; }
+        .header h1 { font-size: 36px; margin-bottom: 15px; }
+        .header p { font-size: 18px; opacity: 0.95; }
+        .content { padding: 50px 40px; }
+        .danger-alert {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 4px solid #ef4444;
+            padding: 35px;
+            margin-bottom: 40px;
+            border-radius: 15px;
+        }
+        .danger-alert h2 { color: #b91c1c; font-size: 26px; margin-bottom: 15px; }
+        .danger-alert p { color: #7f1d1d; line-height: 1.8; font-size: 17px; }
+        .section-title {
+            font-size: 28px;
+            color: #1e293b;
+            margin: 40px 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #d32f2f;
+        }
+        .scam-method {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .scam-method h3 { color: #c2410c; font-size: 20px; margin-bottom: 12px; }
+        .scam-method p { color: #7c2d12; line-height: 1.8; }
+        .scenario {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 2px solid #cbd5e1;
+        }
+        .scenario h3 { color: #1e293b; font-size: 22px; margin-bottom: 20px; }
+        .scenario-step {
+            padding: 15px 0;
+            padding-left: 40px;
+            position: relative;
+            color: #475569;
+            line-height: 1.7;
+            border-left: 3px solid #e2e8f0;
+            margin-left: 15px;
+        }
+        .scenario-step .step-num {
+            position: absolute;
+            left: -15px;
+            top: 15px;
+            width: 30px;
+            height: 30px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .golden-rules {
+            background: linear-gradient(to right, #fbbf24, #f59e0b);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .golden-rules h3 { font-size: 28px; margin-bottom: 25px; }
+        .golden-rules .rule {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .protection {
+            background: #f0fdf4;
+            padding: 35px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        .protection h3 { color: #15803d; font-size: 24px; margin-bottom: 25px; text-align: center; }
+        .protect-item {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #22c55e;
+        }
+        .protect-item strong { color: #166534; font-size: 18px; display: block; margin-bottom: 8px; }
+        .protect-item p { color: #15803d; line-height: 1.7; }
+        .stats { background: #dbeafe; padding: 30px; border-radius: 15px; text-align: center; margin: 30px 0; }
+        .stat { display: inline-block; margin: 15px 30px; }
+        .stat-number { font-size: 48px; font-weight: 900; color: #1e40af; }
+        .stat-label { color: #1e3a8a; font-size: 14px; margin-top: 5px; }
+        .footer { background: #f8fafc; padding: 30px; text-align: center; color: #64748b; font-size: 14px; line-height: 1.8; border-radius: 0 0 20px 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-icon">🛍️</div>
+            <h1>Online Marketplace Scams</h1>
+            <p>Fake Buyer Payment & Seller Fraud</p>
+        </div>
+
+        <div class="content">
+            <div class="danger-alert">
+                <h2>🚨 HIGH RISK: Seller Beware</h2>
+                <p>Marketplace scams target sellers with fake payment confirmations, claiming money has been transferred when it hasn't. Scammers create elaborate fake "buyer protection" or "escrow service" emails to trick sellers into shipping items before receiving real payment. <strong>This scam costs sellers both their items AND money if they fall for additional payment requests.</strong></p>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">$12M</div>
+                    <div class="stat-label">Lost to marketplace scams in 2024</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">78%</div>
+                    <div class="stat-label">Scams target sellers, not buyers</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">🎭 How Marketplace Scams Work</h2>
+
+            <div class="scenario">
+                <h3>📱 Typical Scam Scenario</h3>
+                <div class="scenario-step">
+                    <div class="step-num">1</div>
+                    <strong>You list an item</strong> - iPhone, laptop, or any valuable item on Carousell, Facebook Marketplace, etc.
+                </div>
+                <div class="scenario-step">
+                    <div class="step-num">2</div>
+                    <strong>"Buyer" contacts you</strong> - Seems interested, asks basic questions, agrees to your price quickly
+                </div>
+                <div class="scenario-step">
+                    <div class="step-num">3</div>
+                    <strong>Claims to have paid</strong> - Says they've sent payment via "Carousell Protection" or similar fake service
+                </div>
+                <div class="scenario-step">
+                    <div class="step-num">4</div>
+                    <strong>You receive fake email</strong> - Official-looking email claiming payment is "pending" or "held" by platform
+                </div>
+                <div class="scenario-step">
+                    <div class="step-num">5</div>
+                    <strong>Requests "verification"</strong> - Email says you need to "confirm shipping" or pay a "release fee" to receive funds
+                </div>
+                <div class="scenario-step">
+                    <div class="step-num">6</div>
+                    <strong>You lose everything</strong> - If you ship the item or pay fees, you lose your item, money, and get nothing in return
+                </div>
+            </div>
+
+            <h2 class="section-title">🚩 Common Scam Tactics</h2>
+
+            <div class="scam-method">
+                <h3>💳 Fake "Protection" Services</h3>
+                <p>Claims payment is held by "Carousell Protection," "Buyer Protection," or fake escrow services. These services don't exist on peer-to-peer platforms.</p>
+            </div>
+
+            <div class="scam-method">
+                <h3>📧 Official-Looking Emails</h3>
+                <p>Sends fake confirmation emails that look more "official" than real platform notifications, complete with logos and professional formatting.</p>
+            </div>
+
+            <div class="scam-method">
+                <h3>💰 "Release Fee" Requests</h3>
+                <p>Claims you need to pay a small fee, tax, or verification charge to "release" the payment. Real platforms never ask sellers to pay to receive money.</p>
+            </div>
+
+            <div class="scam-method">
+                <h3>⏰ Urgency Tactics</h3>
+                <p>"Confirm within 24 hours or transaction will be cancelled." Pressures you to act before verifying the payment.</p>
+            </div>
+
+            <div class="scam-method">
+                <h3>📱 Out-of-Platform Communication</h3>
+                <p>Moves conversation to WhatsApp, Telegram, or email where platform can't monitor or intervene.</p>
+            </div>
+
+            <div class="scam-method">
+                <h3>🎯 Overpayment Scam</h3>
+                <p>Claims to have "accidentally overpaid" and asks you to refund the difference before the original payment (which never existed) clears.</p>
+            </div>
+
+            <div class="golden-rules">
+                <h3>💎 Golden Rules for Sellers</h3>
+                <div class="rule">
+                    ✓ Real Payment = Money in YOUR Bank Account
+                </div>
+                <div class="rule">
+                    ✓ No Cash = No Item. Period.
+                </div>
+                <div class="rule">
+                    ✓ Trust Only YOUR Bank App, Nothing Else
+                </div>
+            </div>
+
+            <div class="protection">
+                <h3>🛡️ How to Protect Yourself</h3>
+                
+                <div class="protect-item">
+                    <strong>1. Verify Payment in YOUR Bank</strong>
+                    <p>Open your banking app and check if money has actually arrived in your account. Don't trust screenshots, emails, or "payment confirmations" from buyers.</p>
+                </div>
+
+                <div class="protect-item">
+                    <strong>2. Prefer Face-to-Face Cash</strong>
+                    <p>Meet in public places (malls, MRT stations) for cash transactions. Cash is immediate, verifiable, and irreversible.</p>
+                </div>
+
+                <div class="protect-item">
+                    <strong>3. No Escrow on Peer Platforms</strong>
+                    <p>Carousell, Facebook Marketplace, and similar platforms don't hold payments. Any claim of "held funds" is a scam.</p>
+                </div>
+
+                <div class="protect-item">
+                    <strong>4. Bank Transfer Verification</strong>
+                    <p>If accepting bank transfers, wait until the money appears in YOUR account before handing over the item. Don't accept screenshots as "proof."</p>
+                </div>
+
+                <div class="protect-item">
+                    <strong>5. Never Pay to Receive Payment</strong>
+                    <p>Legitimate transactions don't require you to pay fees, taxes, or verification charges to receive your money. This is always a scam.</p>
+                </div>
+
+                <div class="protect-item">
+                    <strong>6. Ignore Official-Looking Emails</strong>
+                    <p>Scammers send fake emails. Verify payment only through your bank app, never through emails from buyers.</p>
+                </div>
+
+                <div class="protect-item">
+                    <strong>7. Stay On Platform Chat</strong>
+                    <p>Keep all communication within the platform's chat system. This provides evidence if disputes arise and allows platform moderation.</p>
+                </div>
+
+                <div class="protect-item">
+                    <strong>8. Be Suspicious of Quick Agreement</strong>
+                    <p>Scammers agree to prices immediately without negotiation and may offer to pay extra for "rush" or "shipping." This is a red flag.</p>
+                </div>
+
+                <div class="protect-item">
+                    <strong>9. No Shipping Without Payment</strong>
+                    <p>Never ship items before receiving confirmed payment in your bank account. Once shipped, you have zero recourse.</p>
+                </div>
+
+                <div class="protect-item">
+                    <strong>10. Trust Your Instincts</strong>
+                    <p>If something feels off - overly eager buyer, complicated payment process, urgency - walk away. Better to lose a sale than lose your item.</p>
+                </div>
+            </div>
+
+            <div class="danger-alert" style="background: #e0e7ff; border-color: #6366f1;">
+                <h2 style="color: #4338ca;">📋 Safe Transaction Checklist</h2>
+                <p style="color: #3730a3;">
+                    <strong>Before Releasing Your Item:</strong><br>
+                    ☐ Money visible in MY bank account (not screenshot)<br>
+                    ☐ Transaction is cleared (not pending)<br>
+                    ☐ Amount matches agreed price exactly<br>
+                    ☐ Buyer is present if cash transaction<br>
+                    ☐ Meeting in public place for safety<br>
+                    ☐ No additional "fees" or "verification" requested<br>
+                    ☐ No pressure to rush or act immediately<br>
+                    ☐ Communication stayed on platform<br>
+                    ☐ Gut feeling says it's legitimate<br>
+                    <br>
+                    <strong>If ANY checkbox is unchecked, DO NOT proceed with the transaction.</strong>
+                </p>
+            </div>
+
+            <div class="danger-alert" style="background: #dcfce7; border-color: #16a34a;">
+                <h2 style="color: #15803d;">💡 Seller's Mantra</h2>
+                <p style="color: #166534;">"Show me the money in MY account, or the deal is off." Don't be pressured by buyers claiming urgency, offering extra payment, or showing you "proof" of payment. The only proof that matters is money in YOUR bank account that YOU can see in YOUR banking app. Everything else - emails, screenshots, promises - is worthless. Protect yourself: no real money = no item.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>Cash is King, Bank Balance is Truth</strong><br>
+            Never trust payment "confirmations" from buyers - only trust your bank app.<br>
+            Share this to help protect other sellers from marketplace scams.
+        </div>
+    </div>
+</body>
+</html>

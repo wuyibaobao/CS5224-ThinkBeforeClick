@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPF & Retirement Account Scams - Report</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(to right, #d32027, #b71c1c);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+        .header-icon { font-size: 80px; margin-bottom: 20px; }
+        .header h1 { font-size: 36px; margin-bottom: 15px; }
+        .header p { font-size: 18px; opacity: 0.95; }
+        .content { padding: 50px 40px; }
+        .danger-box {
+            background: #fee2e2;
+            border: 4px solid #ef4444;
+            padding: 35px;
+            margin-bottom: 40px;
+            border-radius: 15px;
+        }
+        .danger-box h2 { color: #b91c1c; font-size: 26px; margin-bottom: 15px; }
+        .danger-box p { color: #7f1d1d; line-height: 1.8; font-size: 17px; }
+        .danger-box strong { color: #dc2626; }
+        .section-title {
+            font-size: 28px;
+            color: #1e293b;
+            margin: 40px 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #d32027;
+        }
+        .tactic-card {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .tactic-card h3 { color: #c2410c; font-size: 20px; margin-bottom: 12px; }
+        .tactic-card p { color: #7c2d12; line-height: 1.8; font-size: 16px; }
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .impact-card {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #ef4444;
+        }
+        .impact-card .icon { font-size: 52px; margin-bottom: 15px; }
+        .impact-card h4 { color: #7f1d1d; font-size: 18px; margin-bottom: 10px; }
+        .impact-card p { color: #991b1b; font-size: 14px; line-height: 1.6; }
+        .protection-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        .protection-box h3 {
+            color: #065f46;
+            font-size: 26px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .protect-step {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border-left: 5px solid #22c55e;
+        }
+        .protect-step h4 { color: #166534; font-size: 20px; margin-bottom: 10px; }
+        .protect-step p { color: #15803d; line-height: 1.8; font-size: 16px; }
+        .real-cpf {
+            background: #eff6ff;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 2px solid #3b82f6;
+        }
+        .real-cpf h3 { color: #1e40af; font-size: 22px; margin-bottom: 20px; }
+        .real-cpf ul { list-style: none; padding: 0; }
+        .real-cpf li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #1e3a8a;
+            line-height: 1.7;
+        }
+        .real-cpf li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .stats { background: #fef3c7; padding: 35px; border-radius: 15px; text-align: center; margin: 30px 0; }
+        .stat { display: inline-block; margin: 20px 40px; }
+        .stat-number { font-size: 52px; font-weight: 900; color: #92400e; }
+        .stat-label { color: #78350f; font-size: 15px; margin-top: 5px; line-height: 1.4; }
+        .footer { background: #f8fafc; padding: 30px; text-align: center; color: #64748b; font-size: 14px; line-height: 1.8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-icon">💼</div>
+            <h1>CPF & Retirement Scams</h1>
+            <p>Protecting Your Life Savings from Fraud</p>
+        </div>
+
+        <div class="content">
+            <div class="danger-box">
+                <h2>🚨 CRITICAL: Your Retirement at Risk</h2>
+                <p>CPF account scams target your life savings by impersonating the Central Provident Fund Board. These scams claim your account needs "mandatory updates" or "security verification" to trick you into revealing Singpass credentials or personal information. <strong>CPF scams are particularly dangerous because they threaten your entire retirement fund.</strong></p>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">$400K+</div>
+                    <div class="stat-label">Average CPF savings at risk</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">215%</div>
+                    <div class="stat-label">Increase in government impersonation scams</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">🎭 How CPF Scams Work</h2>
+
+            <div class="tactic-card">
+                <h3>📧 Fake Official Notices</h3>
+                <p>Scammers send emails or SMS that look like official CPF communications, using government-style formatting, logos, and language to appear legitimate.</p>
+            </div>
+
+            <div class="tactic-card">
+                <h3>⚠️ Mandatory Update Lie</h3>
+                <p>Messages claim you must update account information due to "PDPA compliance," "security upgrades," or "system changes." CPF doesn't require periodic updates via email.</p>
+            </div>
+
+            <div class="tactic-card">
+                <h3>🔒 Account Suspension Threats</h3>
+                <p>Scammers threaten to suspend your CPF account, block withdrawals, or delay contributions if you don't "update" immediately. This creates panic and urgency.</p>
+            </div>
+
+            <div class="tactic-card">
+                <h3>🔑 Singpass Credential Theft</h3>
+                <p>Phishing pages ask for your Singpass login and OTP. Once scammers have this, they can access not just CPF, but all government services linked to your Singpass.</p>
+            </div>
+
+            <div class="tactic-card">
+                <h3>💰 Mentions Your Savings</h3>
+                <p>Messages reference large amounts ($400,000+) to emphasize what you could "lose" if you don't comply, using fear to override critical thinking.</p>
+            </div>
+
+            <h2 class="section-title">💔 Potential Consequences</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <div class="icon">💸</div>
+                    <h4>Financial Loss</h4>
+                    <p>Access to your entire CPF balance and ability to make fraudulent withdrawals or transfers</p>
+                </div>
+
+                <div class="impact-card">
+                    <div class="icon">🆔</div>
+                    <h4>Identity Theft</h4>
+                    <p>Stolen Singpass credentials can be used to access all government services in your name</p>
+                </div>
+
+                <div class="impact-card">
+                    <div class="icon">🏠</div>
+                    <h4>Housing Impact</h4>
+                    <p>Scammers could interfere with CPF housing withdrawals or apply for fraudulent housing loans</p>
+                </div>
+
+                <div class="impact-card">
+                    <div class="icon">📊</div>
+                    <h4>Credit Damage</h4>
+                    <p>Identity theft can lead to fraudulent loans and credit applications damaging your financial standing</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">✓ How Real CPF Actually Communicates</h2>
+
+            <div class="real-cpf">
+                <h3>Official CPF Board Practices:</h3>
+                <ul>
+                    <li>All account management done through official CPF website (cpf.gov.sg)</li>
+                    <li>Important notices sent via registered mail to your home address</li>
+                    <li>Never asks for Singpass password or OTP via email/SMS</li>
+                    <li>No "mandatory updates" required via email links</li>
+                    <li>Updates are communicated through CPF mobile app or official portal</li>
+                    <li>Account issues require in-person verification at CPF Service Centre</li>
+                    <li>Customer service only at official hotline: 1800 227 1188</li>
+                    <li>Emails only from @cpf.gov.sg domain (verify carefully)</li>
+                </ul>
+            </div>
+
+            <div class="protection-box">
+                <h3>🛡️ How to Protect Your CPF Savings</h3>
+                
+                <div class="protect-step">
+                    <h4>1. Access CPF Directly Only</h4>
+                    <p>Always type www.cpf.gov.sg directly into your browser. Never click links in emails or SMS claiming to be from CPF. Bookmark the official site for easy access.</p>
+                </div>
+
+                <div class="protect-step">
+                    <h4>2. Verify Through Official Channels</h4>
+                    <p>If you receive a suspicious CPF message, call the official hotline at 1800 227 1188 (from cpf.gov.sg website, not from the message). CPF staff can confirm if any action is needed.</p>
+                </div>
+
+                <div class="protect-step">
+                    <h4>3. Never Share Singpass Credentials</h4>
+                    <p>Your Singpass password and OTP are personal. CPF will NEVER ask for these. Anyone asking for your Singpass details is a scammer, no exceptions.</p>
+                </div>
+
+                <div class="protect-step">
+                    <h4>4. Enable 2FA on Singpass</h4>
+                    <p>Use Singpass Face Verification or biometric authentication. This adds a layer of protection even if scammers get your password.</p>
+                </div>
+
+                <div class="protect-step">
+                    <h4>5. Check Sender Email Carefully</h4>
+                    <p>Hover over sender addresses to verify. Real CPF emails come from @cpf.gov.sg. Scammers use similar-looking domains like @cpf-board.com or @cpf.com.sg.</p>
+                </div>
+
+                <div class="protect-step">
+                    <h4>6. Ignore Urgent Deadlines</h4>
+                    <p>CPF doesn't suspend accounts via email. Real account issues are communicated through multiple official channels over time, not with sudden deadlines.</p>
+                </div>
+
+                <div class="protect-step">
+                    <h4>7. Use Official CPF Mobile App</h4>
+                    <p>Download the official CPF mobile app for account access. Check all notifications within the app, not from external messages.</p>
+                </div>
+
+                <div class="protect-step">
+                    <h4>8. Educate Family Members</h4>
+                    <p>Older family members are often targeted. Teach them to verify any CPF communication with you or by calling the official hotline before taking action.</p>
+                </div>
+
+                <div class="protect-step">
+                    <h4>9. Report Suspicious Messages</h4>
+                    <p>Forward scam emails to phishing@cpf.gov.sg and report to Singapore Police Force. This helps protect other CPF members.</p>
+                </div>
+
+                <div class="protect-step">
+                    <h4>10. Regular Account Monitoring</h4>
+                    <p>Check your CPF account regularly through the official portal. Early detection of suspicious activity can prevent major losses.</p>
+                </div>
+            </div>
+
+            <div class="danger-box" style="background: #e0f2fe; border-color: #0284c7;">
+                <h2 style="color: #075985;">⚖️ What CPF Actually Requires</h2>
+                <p style="color: #0c4a6e;">
+                    <strong>CPF Board does NOT require:</strong><br>
+                    • Periodic "security updates" via email<br>
+                    • Singpass verification through external links<br>
+                    • Immediate response to avoid "suspension"<br>
+                    • Bank account re-verification (they already have it)<br>
+                    • Payment of any fees for account maintenance<br><br>
+                    
+                    <strong>What CPF DOES require:</strong><br>
+                    • In-person verification for major changes<br>
+                    • Updates submitted through official portal<br>
+                    • Supporting documents for withdrawal applications<br>
+                    • Identity verification at CPF Service Centres
+                </p>
+            </div>
+
+            <div class="danger-box" style="background: #dcfce7; border-color: #16a34a;">
+                <h2 style="color: #15803d;">💡 Critical Reminder</h2>
+                <p style="color: #166534;">Your CPF represents decades of savings for your retirement. It's worth taking the time to verify any communication claiming to be from CPF. A 5-minute phone call to the official hotline could save your entire life savings. When in doubt, do nothing and verify independently. Real CPF matters can wait for proper verification.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>Your Retirement Security Is Your Responsibility</strong><br>
+            Protect your CPF savings by staying vigilant and verifying all communications.<br>
+            Share this information with family and friends, especially elderly relatives.
+        </div>
+    </div>
+</body>
+</html>

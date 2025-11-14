@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUS - Tuition Fee Refund Notice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f3f4f6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 35px auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .header {
+            background: white;
+            padding: 30px 40px;
+            border-bottom: 5px solid #ef6c00;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo-img {
+            width: 80px;
+            height: 80px;
+            background: #ef6c00;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 38px;
+            font-weight: bold;
+        }
+        .logo-text h1 {
+            color: #ef6c00;
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        .logo-text p {
+            color: #666;
+            font-size: 13px;
+        }
+        .student-id {
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+        }
+        .student-id strong {
+            display: block;
+            color: #ef6c00;
+            font-size: 15px;
+            margin-top: 5px;
+        }
+        .notice-banner {
+            background: linear-gradient(to right, #10b981, #059669);
+            color: white;
+            padding: 25px 40px;
+            text-align: center;
+        }
+        .banner-icon {
+            font-size: 56px;
+            margin-bottom: 12px;
+        }
+        .banner-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .banner-subtitle {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 45px 40px;
+        }
+        .greeting {
+            font-size: 16px;
+            color: #1e293b;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+        .refund-card {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border: 3px solid #f59e0b;
+            padding: 35px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+        }
+        .refund-label {
+            font-size: 19px;
+            color: #92400e;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .refund-amount {
+            font-size: 68px;
+            font-weight: 900;
+            color: #ea580c;
+            margin: 20px 0;
+        }
+        .refund-reason {
+            font-size: 15px;
+            color: #92400e;
+            line-height: 1.7;
+            margin-top: 15px;
+        }
+        .details-section {
+            background: #f8fafc;
+            padding: 28px;
+            border-radius: 12px;
+            margin: 28px 0;
+        }
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+        .detail-label {
+            color: #64748b;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .detail-value {
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .deadline-notice {
+            background: #fff7ed;
+            border: 2px solid #fb923c;
+            padding: 22px;
+            border-radius: 12px;
+            margin: 28px 0;
+            text-align: center;
+        }
+        .deadline-text {
+            color: #c2410c;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .deadline-date {
+            font-size: 34px;
+            font-weight: 900;
+            color: #ea580c;
+        }
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 22px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .info-box h4 {
+            color: #1e40af;
+            margin-bottom: 12px;
+            font-size: 17px;
+        }
+        .info-box ul {
+            padding-left: 25px;
+        }
+        .info-box li {
+            color: #1e40af;
+            margin: 10px 0;
+            line-height: 1.7;
+        }
+        .claim-btn {
+            background: linear-gradient(to right, #ef6c00, #f57c00);
+            color: white;
+            width: 100%;
+            padding: 22px;
+            border: none;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 32px 0;
+            transition: all 0.3s;
+            box-shadow: 0 6px 20px rgba(239, 108, 0, 0.4);
+        }
+        .claim-btn:hover {
+            background: linear-gradient(to right, #e65100, #ef6c00);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(239, 108, 0, 0.5);
+        }
+        .footer {
+            background: #f8fafc;
+            padding: 30px 40px;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.8;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 45px;
+            border-radius: 22px;
+            max-width: 720px;
+            width: 100%;
+            text-align: center;
+            animation: slideUp 0.6s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(80px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-icon {
+            font-size: 100px;
+            margin-bottom: 28px;
+        }
+        .scam-warning {
+            background: #fef2f2;
+            border: 3px solid #ef4444;
+            padding: 32px;
+            border-radius: 16px;
+            margin: 32px 0;
+            text-align: left;
+        }
+        .scam-warning h3 {
+            color: #b91c1c;
+            margin-bottom: 22px;
+            font-size: 23px;
+        }
+        .scam-warning li {
+            margin: 15px 0;
+            color: #dc2626;
+            line-height: 1.9;
+        }
+        .protection-guide {
+            background: #f0fdf4;
+            padding: 30px;
+            border-radius: 16px;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .protection-guide h4 {
+            color: #15803d;
+            margin-bottom: 20px;
+            font-size: 21px;
+        }
+        .protection-guide p {
+            color: #166534;
+            line-height: 2;
+        }
+        .close-btn {
+            background: linear-gradient(135deg, #ef6c00 0%, #f57c00 100%);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo-img">🎓</div>
+                <div class="logo-text">
+                    <h1>NUS</h1>
+                    <p>National University of Singapore</p>
+                </div>
+            </div>
+            <div class="student-id">
+                Student ID:<br>
+                <strong>A0******X</strong>
+            </div>
+        </div>
+
+        <div class="notice-banner">
+            <div class="banner-icon">💰</div>
+            <div class="banner-title">Tuition Fee Refund Notice</div>
+            <div class="banner-subtitle">Academic Year 2024/2025</div>
+        </div>
+
+        <div class="content">
+            <div class="greeting">
+                <p>Dear Student,</p>
+                <br>
+                <p>The Office of Financial Services has completed the annual review of tuition fee payments for AY2024/2025. Following an audit of MOE Tuition Grant disbursements, we have identified an <strong>overpayment</strong> on your account.</p>
+                <br>
+                <p>You are eligible to receive a refund of the excess amount paid.</p>
+            </div>
+
+            <div class="refund-card">
+                <div class="refund-label">Your Tuition Fee Refund:</div>
+                <div class="refund-amount">S$ 1,850</div>
+                <div class="refund-reason">
+                    ✓ MOE Tuition Grant Adjustment<br>
+                    ✓ Verified by Office of Financial Services<br>
+                    ✓ Ready for disbursement
+                </div>
+            </div>
+
+            <div class="details-section">
+                <h3 style="margin-bottom: 18px; color: #1e293b;">Refund Details:</h3>
+                <div class="detail-item">
+                    <span class="detail-label">Academic Year:</span>
+                    <span class="detail-value">2024/2025</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Semester:</span>
+                    <span class="detail-value">Semester 1 & 2</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Original Payment:</span>
+                    <span class="detail-value">S$ 8,200</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Corrected Amount:</span>
+                    <span class="detail-value">S$ 6,350</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Refund Amount:</span>
+                    <span class="detail-value" style="color: #10b981;">S$ 1,850</span>
+                </div>
+            </div>
+
+            <div class="deadline-notice">
+                <div class="deadline-text">⏰ Action Required By:</div>
+                <div class="deadline-date">31 October 2025</div>
+                <p style="margin-top: 15px; color: #c2410c; font-size: 14px;">
+                    Unclaimed refunds will be forfeited and applied to next semester's fees
+                </p>
+            </div>
+
+            <div class="info-box">
+                <h4>📋 Required Information:</h4>
+                <ul>
+                    <li>Student ID and NRIC/FIN number</li>
+                    <li>Bank account details for refund transfer</li>
+                    <li>Verification of current contact information</li>
+                </ul>
+            </div>
+
+            <button class="claim-btn" onclick="trackAndShowWarning('nus_claim_refund')">
+                Claim My Refund Now →
+            </button>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
+                <button style="background: linear-gradient(to right, #3b82f6, #2563eb); color: white; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s;" onclick="trackAndShowWarning('nus_update_bank_details')">
+                    Update Bank Details
+                </button>
+                <button style="background: linear-gradient(to right, #10b981, #059669); color: white; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s;" onclick="trackAndShowWarning('nus_view_fee_breakdown')">
+                    View Fee Breakdown
+                </button>
+            </div>
+
+            <div class="info-box">
+                <h4>ℹ️ Important Notes:</h4>
+                <ul>
+                    <li>Refunds are processed within 7-10 working days</li>
+                    <li>Email confirmation will be sent after successful claim</li>
+                    <li>For enquiries, contact Office of Financial Services</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>National University of Singapore</strong><br>
+            21 Lower Kent Ridge Road, Singapore 119077<br>
+            Office of Financial Services | Tel: 6516 1234<br><br>
+            This is an official notification from NUS.<br>
+            © 2025 National University of Singapore. All rights reserved.
+        </div>
+    </div>
+
+    <div class="modal" id="warningModal">
+        <div class="modal-content">
+            <div class="modal-icon">⚠️</div>
+            <h2 style="color: #dc2626; margin-bottom: 30px; font-size: 30px;">WARNING: University Tuition Scam!</h2>
+            <p style="font-size: 18px; margin-bottom: 30px;">You almost clicked on a <strong>fake NUS tuition refund notification</strong> - a common scam targeting students!</p>
+            
+            <div class="scam-warning">
+                <h3>🚩 Red Flags in This Scam:</h3>
+                <ul>
+                    <li><strong>Unexpected Refund:</strong> Universities rarely have tuition "overpayments" due to automated billing systems</li>
+                    <li><strong>Email Notification:</strong> Real NUS financial notices are sent via official Student Portal, not external emails</li>
+                    <li><strong>External Links:</strong> Legitimate refunds are processed through NUS Student Portal only</li>
+                    <li><strong>Requests Banking Info:</strong> NUS already has your bank details from initial enrollment</li>
+                    <li><strong>Generic Student ID:</strong> Real notices include your full name and complete student ID</li>
+                    <li><strong>Forfeiture Threat:</strong> Creates false urgency with "unclaimed refunds will be forfeited"</li>
+                    <li><strong>Domain Check:</strong> Real NUS emails come from @nus.edu.sg or @u.nus.edu domains</li>
+                    <li><strong>MOE Grant Excuse:</strong> Tuition Grant adjustments are communicated through official channels</li>
+                </ul>
+            </div>
+
+            <div class="protection-guide">
+                <h4>✅ How to Verify University Refunds:</h4>
+                <p>
+                    <strong>1.</strong> Log in directly to <strong>NUS Student Portal</strong> to check your account status<br>
+                    <strong>2.</strong> Contact Office of Financial Services at 6516 1234 to verify any refund claims<br>
+                    <strong>3.</strong> Real refunds appear in your Student Portal financial statements<br>
+                    <strong>4.</strong> NUS will NEVER ask for bank details via email - they already have it<br>
+                    <strong>5.</strong> Check email sender address carefully - must be @nus.edu.sg<br>
+                    <strong>6.</strong> Visit Office of Financial Services in person if uncertain<br>
+                    <strong>7.</strong> Report phishing emails to NUS IT Security at itcare@nus.edu.sg<br>
+                    <strong>8.</strong> Never click links in unexpected "refund" emails
+                </p>
+            </div>
+
+            <p style="color: #ea580c; font-weight: 700; margin-top: 25px; font-size: 17px;">
+                💡 Remember: NUS communicates official financial matters through the Student Portal, not random emails!
+            </p>
+            
+            <button class="close-btn" onclick="closeWarning()">I Understand - Close</button>
+        </div>
+    </div>
+
+    <!-- Tracking Script -->
+    <script src="tracking.js"></script>
+    
+    <script>
+        function showWarning() {
+            document.getElementById('warningModal').style.display = 'flex';
+        }
+        
+        function closeWarning() {
+            document.getElementById('warningModal').style.display = 'none';
+        }
+
+        // Track scam click when user clicks any button
+        function trackAndShowWarning(scamType) {
+            if (window.handleScamClick) {
+                window.handleScamClick(scamType, showWarning);
+            } else {
+                showWarning();
+            }
+        }
+    </script>
+</body>
+</html>

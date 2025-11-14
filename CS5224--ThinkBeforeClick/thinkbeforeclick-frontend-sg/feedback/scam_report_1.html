@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account Security Scams - Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: linear-gradient(to right, #d71920, #b01518);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+        .header-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+        }
+        .content {
+            padding: 50px 40px;
+        }
+        .intro-box {
+            background: #fef2f2;
+            border-left: 5px solid #dc2626;
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 10px;
+        }
+        .intro-box h2 {
+            color: #dc2626;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .intro-box p {
+            color: #7f1d1d;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        .section-title {
+            font-size: 28px;
+            color: #1e293b;
+            margin: 40px 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #d71920;
+        }
+        .warning-card {
+            background: #fff7ed;
+            border: 2px solid #f97316;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 12px;
+        }
+        .warning-card h3 {
+            color: #c2410c;
+            font-size: 20px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .warning-card p {
+            color: #7c2d12;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        .example-box {
+            background: #f1f5f9;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+        }
+        .example-box h4 {
+            color: #334155;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .example-box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .example-box li {
+            padding: 12px 0 12px 30px;
+            position: relative;
+            color: #475569;
+            line-height: 1.7;
+        }
+        .example-box li:before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+        }
+        .protection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .protection-card {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .protection-card .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .protection-card h4 {
+            color: #065f46;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .protection-card p {
+            color: #047857;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .action-steps {
+            background: #dbeafe;
+            padding: 35px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        .action-steps h3 {
+            color: #1e40af;
+            font-size: 24px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #3b82f6;
+        }
+        .step strong {
+            color: #1e40af;
+            font-size: 18px;
+        }
+        .step p {
+            color: #1e3a8a;
+            margin-top: 8px;
+            line-height: 1.7;
+        }
+        .stats-box {
+            background: #fef3c7;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .stat {
+            display: inline-block;
+            margin: 15px 30px;
+        }
+        .stat-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: #92400e;
+        }
+        .stat-label {
+            color: #78350f;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .footer {
+            background: #f8fafc;
+            padding: 30px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-icon">🏦</div>
+            <h1>Bank Account Security Scams</h1>
+            <p>Understanding Fake Security Alert Phishing</p>
+        </div>
+
+        <div class="content">
+            <div class="intro-box">
+                <h2>⚠️ What Are Bank Security Scams?</h2>
+                <p>Bank security scams impersonate legitimate financial institutions to trick victims into revealing login credentials, passwords, or one-time passwords (OTPs). These scams typically claim there's suspicious activity on your account and create a sense of urgency to bypass your critical thinking.</p>
+            </div>
+
+            <div class="stats-box">
+                <div class="stat">
+                    <div class="stat-number">$485M</div>
+                    <div class="stat-label">Lost to bank scams in 2024</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">76%</div>
+                    <div class="stat-label">Increase in banking phishing</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">🚩 Common Tactics Used</h2>
+
+            <div class="warning-card">
+                <h3>🚨 Fake Security Alerts</h3>
+                <p>Scammers send emails or SMS claiming suspicious login attempts from foreign countries (often Nigeria, Russia, or China) to create panic and urgency.</p>
+            </div>
+
+            <div class="warning-card">
+                <h3>⏰ Account Suspension Threats</h3>
+                <p>Messages threaten that your account will be "permanently locked" or "frozen" within 24 hours unless you verify immediately.</p>
+            </div>
+
+            <div class="warning-card">
+                <h3>🔗 Malicious Links</h3>
+                <p>Emails contain links to fake websites that look identical to real bank login pages, designed to steal your credentials.</p>
+            </div>
+
+            <div class="warning-card">
+                <h3>📞 Fake Call Centers</h3>
+                <p>Some scams involve phone calls from "bank security teams" asking you to verify transactions or provide OTPs.</p>
+            </div>
+
+            <h2 class="section-title">❌ Red Flags to Watch For</h2>
+
+            <div class="example-box">
+                <h4>These are clear signs of a scam:</h4>
+                <ul>
+                    <li>Email asks you to click a link to "verify your account"</li>
+                    <li>Claims your account will be locked within hours</li>
+                    <li>Uses generic greetings like "Dear Customer" instead of your name</li>
+                    <li>Shows suspicious login from foreign location you've never visited</li>
+                    <li>Contains spelling errors or poor grammar</li>
+                    <li>Sender email address doesn't match official bank domain</li>
+                    <li>Requests your password, PIN, or full card number</li>
+                    <li>Creates extreme urgency with countdown timers</li>
+                </ul>
+            </div>
+
+            <h2 class="section-title">✅ How to Protect Yourself</h2>
+
+            <div class="protection-grid">
+                <div class="protection-card">
+                    <div class="icon">🔍</div>
+                    <h4>Verify Independently</h4>
+                    <p>Never use contact info from suspicious messages. Call your bank using the number on their official website or your bank card.</p>
+                </div>
+
+                <div class="protection-card">
+                    <div class="icon">🔐</div>
+                    <h4>Enable 2FA</h4>
+                    <p>Two-factor authentication adds an extra security layer. Even if scammers get your password, they can't access your account.</p>
+                </div>
+
+                <div class="protection-card">
+                    <div class="icon">🚫</div>
+                    <h4>Don't Click Links</h4>
+                    <p>Type your bank's URL directly into your browser. Never click links in emails or SMS messages.</p>
+                </div>
+
+                <div class="protection-card">
+                    <div class="icon">📱</div>
+                    <h4>Use Official Apps</h4>
+                    <p>Download banking apps only from official app stores. Check notifications within the app, not from external messages.</p>
+                </div>
+            </div>
+
+            <div class="action-steps">
+                <h3>🎯 What Real Banks Actually Do</h3>
+                
+                <div class="step">
+                    <strong>✓ Banks Never Ask for Passwords</strong>
+                    <p>Legitimate banks will NEVER ask for your full password, PIN, or OTP via email, SMS, or phone calls.</p>
+                </div>
+
+                <div class="step">
+                    <strong>✓ Official Communication Channels</strong>
+                    <p>Real security alerts appear in your banking app or secure message inbox, not just via email.</p>
+                </div>
+
+                <div class="step">
+                    <strong>✓ No Urgent Account Closure</strong>
+                    <p>Banks don't lock accounts without proper investigation and will send official letters to your registered address.</p>
+                </div>
+
+                <div class="step">
+                    <strong>✓ Direct Access Only</strong>
+                    <p>Banks direct you to log in through their official website or app, never through email links.</p>
+                </div>
+
+                <div class="step">
+                    <strong>✓ Personal Verification</strong>
+                    <p>If verification is needed, banks may ask you to visit a branch in person with your ID.</p>
+                </div>
+            </div>
+
+            <div class="intro-box" style="background: #d1fae5; border-left-color: #10b981;">
+                <h2 style="color: #065f46;">💡 Remember</h2>
+                <p style="color: #064e3b;">When in doubt, don't act. Close the suspicious email or message, and contact your bank directly using official channels. Banks understand security concerns and won't mind if you verify their communications. Taking time to confirm could save you thousands of dollars.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>Stay Alert, Stay Safe</strong><br>
+            Report suspicious messages to your bank and the Singapore Police Force.<br>
+            Share this information to help others avoid falling victim to scams.
+        </div>
+    </div>
+</body>
+</html>

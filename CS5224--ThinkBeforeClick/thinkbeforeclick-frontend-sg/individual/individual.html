@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - ThinkBeforeClick</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === 基础样式 (无变化) === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; } /* 确保平滑滚动 */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F4FF; 
+            color: #333; 
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* === 头部样式 (无变化) === */
+        header {
+            background-color: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #E0E0E0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: #333; display: flex; align-items: center; }
+        .logo-icon-wrapper {
+            width: 32px; height: 32px; margin-right: 12px;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #6B7BFF 0%, #885CF5 100%);
+            box-shadow: 0 2px 6px rgba(100, 100, 200, 0.3);
+            flex-shrink: 0;
+        }
+        .logo-icon-wrapper svg { width: 20px; height: 20px; color: #fff; stroke-width: 2; }
+        nav { display: flex; gap: 30px; }
+        nav a { color: #555; text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        nav a:hover { color: #3a47d5; }
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .user-info span { color: #555; font-weight: 500; }
+        .logout-btn {
+            background-color: #E64C3C; color: #fff; padding: 8px 18px;
+            border-radius: 6px; text-decoration: none; font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .logout-btn:hover { background-color: #d13a2c; }
+
+        /* === 主内容区域 (无变化) === */
+        main { flex-grow: 1; padding: 60px 0; background-color: #F0F4FF; }
+        .welcome-section { text-align: center; margin-bottom: 50px; }
+        .welcome-section h1 {
+            font-size: 3.2rem; font-weight: 800; color: #3a47d5; 
+            margin-bottom: 10px; letter-spacing: -0.5px;
+        }
+        .welcome-section h2 { font-size: 1.6rem; font-weight: 500; color: #666; margin-bottom: 25px; }
+        .slogan {
+            font-size: 1.1rem; font-weight: 600; color: #3a47d5;
+            padding: 8px 18px; border: 1px solid #D6DBED;
+            background-color: #EBF0F8; border-radius: 25px; display: inline-block;
+        }
+
+        /* === 欢迎卡片网格 (无变化) === */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .card {
+            background-color: #fff; border-radius: 12px; padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            display: flex; flex-direction: column;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); }
+        .card-header { display: flex; align-items: center; margin-bottom: 20px; }
+        .card-icon {
+            width: 45px; height: 45px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            margin-right: 15px; font-size: 1.5rem; flex-shrink: 0;
+        }
+        .card-icon svg { width: 24px; height: 24px; color: #fff; }
+        .card-header h3 { font-size: 1.6rem; font-weight: 700; color: #333; }
+        .card p { font-size: 1rem; color: #666; margin-bottom: 15px; }
+
+        /* === 卡片具体样式 (有修改) === */
+        
+        /* * === 变更 (Change) 1.1 ===
+         * 新的 "开始培训" 卡片样式
+         */
+        .card.start-training {
+            /* 替换掉 .coming-soon 的绿色，改用品牌蓝色 */
+            background: linear-gradient(135deg, #3a47d5 0%, #5a67d8 100%);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(58, 71, 213, 0.3);
+        }
+        .card.start-training h3 {
+            color: #fff;
+        }
+        .card.start-training p {
+            color: #E0E7FF;
+            margin-bottom: 25px;
+        }
+        /* * === 变更 (Change) 1.2 ===
+         * 新的 "开始培训" 按钮样式
+         */
+        .cta-button {
+            background-color: #fff;
+            color: #3a47d5;
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .cta-button:hover {
+            background-color: #F0F4FF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card.threat .card-icon { background-color: #E64C3C; }
+        .card.threat h3 { color: #E64C3C; }
+        .card.threat .stat {
+            font-size: 3.8rem; font-weight: 800; color: #E64C3C;
+            line-height: 1.1; margin-top: 10px; margin-bottom: 10px;
+            text-align: center;
+        }
+        .card.threat p { text-align: center; }
+
+        .card.features .card-icon { background-color: #3a47d5; }
+        .card.features h3 { color: #3a47d5; }
+        .card.features ul { list-style: none; padding: 0; }
+        .card.features li { margin-bottom: 15px; display: flex; align-items: flex-start; font-size: 1rem; }
+        .card.features li strong { font-weight: 700; color: #333; margin-right: 8px; flex-shrink: 0; width: 90px; }
+        .card.features li span { color: #666; }
+
+        /* * === 变更 (Change) 2.1 ===
+         * 新增: 培训模块区域 (默认隐藏)
+         */
+        #training-modules-section {
+            display: none; /* 默认隐藏 */
+            margin-top: 40px;
+        }
+        
+        #training-modules-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        /* * === 变更 (Change) 2.2 ===
+         * 新增: 培训模块卡片样式
+         */
+        .module-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        .module-card .card-icon {
+            margin: 0 auto 20px auto; /* 居中 */
+        }
+        .module-card h4 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .module-card p {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 25px;
+        }
+        /* 培训模块 "开始" 按钮 */
+        .module-button {
+            background-color: #3a47d5;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .module-button:hover {
+            background-color: #2c358b;
+        }
+
+
+        /* === 页脚样式 (无变化) === */
+        footer {
+            background-color: #F0F4FF; padding: 30px 0;
+            text-align: center; color: #777;
+            border-top: 1px solid #E0E0E0; margin-top: 50px;
+        }
+        footer a { color: #555; text-decoration: none; margin: 0 10px; transition: color 0.3s ease; }
+        footer a:hover { color: #3a47d5; }
+
+        /* === 响应式设计 (无变化) === */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; gap: 15px; }
+            nav, .user-info { width: 100%; justify-content: center; }
+            nav { flex-wrap: wrap; gap: 15px; }
+            .welcome-section h1 { font-size: 2.2rem; }
+            .welcome-section h2 { font-size: 1.2rem; }
+            .cards-grid, .modules-grid { grid-template-columns: 1fr; }
+            .card { padding: 25px; }
+            .card-header h3 { font-size: 1.4rem; }
+            #training-modules-section h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <div class="logo-icon-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                </div>
+                ThinkBeforeClick
+            </a>
+            <nav>
+                <a href="#">Features</a>
+                <a href="#">How It Works</a>
+                <a href="#">Enterprise</a>
+            </nav>
+            <div class="user-info">
+                <span>Welcome, <span id="header-username">[User Name]</span></span>
+                <a href="#" class="logout-btn" onclick="logout(); return false;">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="welcome-section">
+                <h1>Welcome, <span id="main-username">[User Name]</span>!</h1>
+                <h2>Your personal shield is about to be activated.</h2>
+                <p class="slogan">ThinkBeforeClick - Your Shield Against Phishing</p>
+            </section>
+
+            <section class="cards-grid" id="welcome-cards-grid">
+                
+                <div class="card start-training">
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color: #fff;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3a47d5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </div>
+                        <h3>Ready to Start?</h3>
+                    </div>
+                    <p>Your access is active. Begin your first training module to learn how to spot sophisticated phishing attacks.</p>
+                    
+                    <button id="start-training-btn" class="cta-button">
+                        Start Your Training Now
+                    </button>
+                </div>
+
+                <div class="card threat">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                <line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                        </div>
+                        <h3>Danger Is Closer Than You Think</h3>
+                    </div>
+                    <div class="stat">91%</div>
+                    <p>of attacks start with a phishing email.</p>
+                </div>
+
+                <div class="card features">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg>
+                        </div>
+                        <h3>Your Personal Security Gym</h3>
+                    </div>
+                    <ul>
+                        <li><strong>🎯 Spot Phishing:</strong> <span>Train with real-world simulations.</span></li>
+                        <li><strong>🎮 Interactive Learning:</strong> <span>Master skills via scenario-based games.</span></li>
+                        <li><strong>⚡ Real-time Feedback:</strong> <span>Get instant feedback and explanations.</span></li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <section id="training-modules-section">
+                <h2>Choose Your First Module</h2>
+                <div class="modules-grid">
+                    
+                    <div class="module-card">
+                        <div class="card-icon" style="background-color: #E64C3C;"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <h4>Module 1: Phishing Emails</h4>
+                        <p>Learn to spot malicious links, urgent requests, and sender impersonations in your inbox.</p>
+                        <a href="#" class="module-button">Start Module 1</a>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="card-icon" style="background-color: #E6A23C;"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                        </div>
+                        <h4>Module 2: SMS & Smishing</h4>
+                        <p>Identify fake bank alerts, delivery notifications, and prize scams sent directly to your phone.</p>
+                        <a href="#" class="module-button">Start Module 2</a>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="card-icon" style="background-color: #3a47d5;"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="3" y1="9" x2="21" y2="9"></line>
+                                <line x1="9" y1="21" x2="9" y2="9"></line>
+                            </svg>
+                        </div>
+                        <h4>Module 3: Fake Websites</h4>
+                        <p>Detect subtle URL misspellings, unsecure connections, and pixel-perfect clones of trusted sites.</p>
+                        <a href="#" class="module-button">Start Module 3</a>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            © 2025 ThinkBeforeClick. All rights reserved. 
+            <a href="#">Privacy Policy</a>
+            <a href="#">Contact Us</a>
+        </div>
+    </footer>
+
+    <script>
+        /**
+         * Get username from localStorage
+         * Returns email or username extracted from email, or default "employee01"
+         */
+        function getUsername() {
+            // Try to get username first
+            let username = localStorage.getItem('username');
+            
+            // If no username, try to get email and extract username part
+            if (!username) {
+                const email = localStorage.getItem('userEmail');
+                if (email) {
+                    // Extract username from email (part before @)
+                    username = email.split('@')[0];
+                } else {
+                    // No user info found, use default username
+                    console.warn('No user information found. Using default username: employee01');
+                    username = 'employee01';
+                }
+            }
+            
+            return username;
+        }
+
+        /**
+         * Update username display in header and main section
+         */
+        function updateUsernameDisplay() {
+            const username = getUsername();
+            
+            if (username) {
+                // Update header username
+                const headerUsername = document.getElementById('header-username');
+                if (headerUsername) {
+                    headerUsername.textContent = username;
+                }
+                
+                // Update main section username
+                const mainUsername = document.getElementById('main-username');
+                if (mainUsername) {
+                    mainUsername.textContent = username;
+                }
+                
+                console.log('Username updated:', username);
+            }
+        }
+
+        /**
+         * Logout function
+         * Clear localStorage and redirect to home page
+         */
+        function logout() {
+            const confirmed = confirm('Are you sure you want to logout?');
+            
+            if (confirmed) {
+                // Clear all user data from localStorage
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('username');
+                localStorage.removeItem('userType');
+                localStorage.removeItem('selectedTemplates');
+                localStorage.removeItem('currentIndex');
+                
+                console.log('User logged out successfully');
+                
+                // Redirect to home page
+                window.location.href = '../index.html';
+            }
+        }
+
+        // Wait for HTML document to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Update username display first
+            updateUsernameDisplay();
+            
+            // Check if user just completed training
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('completed') === 'true') {
+                // Show congratulations message
+                alert('🎉 Congratulations! You have completed all 3 training modules!\n\nYou are now better equipped to spot phishing attacks.');
+                // Clear training data from localStorage
+                localStorage.removeItem('selectedTemplates');
+                localStorage.removeItem('currentIndex');
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
+            // 1. Find the "Start Your Training Now" button
+            const startButton = document.getElementById('start-training-btn');
+            
+            // 2. Add click event to the button
+            startButton.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default button behavior
+                
+                // Randomly select 3 templates from 10 available templates
+                const allTemplates = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                const selectedTemplates = [];
+                
+                // Fisher-Yates shuffle algorithm to get 3 random unique templates
+                const shuffled = allTemplates.slice(); // Copy array
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                
+                // Take first 3 templates
+                const selected = shuffled.slice(0, 3);
+                const templateNames = selected.map(num => `template${num}.html`);
+                
+                console.log('Selected templates:', templateNames);
+                
+                // Save to localStorage
+                localStorage.setItem('selectedTemplates', JSON.stringify(templateNames));
+                localStorage.setItem('currentIndex', '0');
+                
+                // Redirect to training viewer
+                window.location.href = 'training-viewer.html';
+            });
+        });
+    </script>
+
+</body>
+</html>

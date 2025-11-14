@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Security Report - ThinkBeforeClick</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm no-print">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold text-gray-800">ThinkBeforeClick</span>
+                    <span class="text-sm text-gray-500">Security Report</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 text-gray-500 border-r border-gray-200 pr-4 mr-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M5 6h14M5 10h14M5 14h14M5 18h14"></path>
+                        </svg>
+                        <span id="displayCompanyId" class="text-sm font-medium">Loading...</span>
+                    </div>
+                    <button onclick="window.print()" class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 px-4 py-2 rounded-lg hover:bg-gray-100">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                        <span>Print</span>
+                    </button>
+                    <button onclick="window.location.href='dashboard.html'" class="flex items-center space-x-2 text-blue-600 hover:text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-50">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        <span>Back to Dashboard</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="report-section"
+        class="container mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl p-8 text-white mb-8 shadow-lg">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">Phishing Simulation Report</h1>
+                    <p class="text-blue-100">Comprehensive security awareness analysis for your organization</p>
+                    <p class="text-sm text-blue-200 mt-2">Generated on <span id="reportDate"></span></p>
+                </div>
+                <div class="hidden md:block">
+                    <div class="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center">
+                        <svg class="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-600 text-sm font-medium">Total Simulations</span>
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-900" id="totalSimulations">0</div>
+                <div class="text-xs text-gray-500 mt-1">Emails sent to employees</div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-600 text-sm font-medium">Open Rate</span>
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-900" id="openRate">0%</div>
+                <div class="text-xs text-gray-500 mt-1">Employees who opened emails</div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-600 text-sm font-medium">Click Rate</span>
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-red-600" id="clickRate">0%</div>
+                <div class="text-xs text-gray-500 mt-1">Employees who clicked scams</div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-600 text-sm font-medium">Total Scam Clicks</span>
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-900" id="totalClicks">0</div>
+                <div class="text-xs text-gray-500 mt-1">Total risky clicks recorded</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Template Performance -->
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Template Performance</h2>
+                <canvas id="templateChart"></canvas>
+            </div>
+
+            <!-- Scam Type Distribution -->
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">Most Clicked Scam Types</h2>
+                <canvas id="scamChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Employee Risk Ranking -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold text-gray-900">Employee Vulnerability Ranking</h2>
+                    <div class="flex items-center space-x-2 text-sm text-gray-500">
+                        <span>🔴 High Risk</span>
+                        <span>🟡 Medium Risk</span>
+                        <span>🟢 Low Risk</span>
+                    </div>
+                </div>
+                <p class="text-gray-600 mt-2">Employees ranked by total scam clicks (highest risk first)</p>
+            </div>
+            <div class="p-6">
+                <div id="employeeRanking" class="space-y-3">
+                    <div class="text-center py-12 text-gray-400">
+                        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        <p class="text-lg font-medium">No data available yet</p>
+                        <p class="text-sm mt-2">Send phishing simulations to generate report data</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scam Details -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 mb-8">
+            <div class="p-6 border-b border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-900">Scam Analysis & Prevention Guide</h2>
+                <p class="text-gray-600 mt-2">Detailed breakdown of scam types identified in phishing templates</p>
+            </div>
+            <div class="p-6">
+                <div class="space-y-6">
+                    <!-- Scam Type 1 -->
+                    <div class="border-l-4 border-red-500 pl-6 py-4 bg-red-50 rounded-r-lg">
+                        <div class="flex items-start justify-between mb-3">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 flex items-center space-x-2">
+                                    <span>🚨 Scam Type 1: Urgent Action Buttons</span>
+                                </h3>
+                                <p class="text-sm text-gray-600 mt-1">"Verify My Identity Now", "Freeze Account", etc.</p>
+                            </div>
+                            <div class="text-2xl font-bold text-red-600" id="scam1Count">0</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg">
+                            <p class="font-semibold text-gray-900 mb-2">⚠️ What is it?</p>
+                            <p class="text-gray-700 mb-3">Attackers create fake urgent buttons to pressure victims into immediate action, bypassing logical thinking.</p>
+                            <p class="font-semibold text-gray-900 mb-2">🛡️ How to prevent:</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>Never click links in unexpected emails</li>
+                                <li>Always verify through official channels (call bank directly)</li>
+                                <li>Check sender email address carefully</li>
+                                <li>Legitimate organizations don't demand immediate action via email</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Scam Type 2 -->
+                    <div class="border-l-4 border-orange-500 pl-6 py-4 bg-orange-50 rounded-r-lg">
+                        <div class="flex items-start justify-between mb-3">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 flex items-center space-x-2">
+                                    <span>⚠️ Scam Type 2: Secondary Action Links</span>
+                                </h3>
+                                <p class="text-sm text-gray-600 mt-1">"View Full Details", "Report Suspicious Activity", etc.</p>
+                            </div>
+                            <div class="text-2xl font-bold text-orange-600" id="scam2Count">0</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg">
+                            <p class="font-semibold text-gray-900 mb-2">⚠️ What is it?</p>
+                            <p class="text-gray-700 mb-3">Disguised as helpful links, these redirect to fake login pages to harvest credentials.</p>
+                            <p class="font-semibold text-gray-900 mb-2">🛡️ How to prevent:</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>Hover over links to see actual URL before clicking</li>
+                                <li>Look for misspelled domain names</li>
+                                <li>Use bookmarked official websites instead</li>
+                                <li>Enable 2-factor authentication on all accounts</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Scam Type 3 -->
+                    <div class="border-l-4 border-yellow-500 pl-6 py-4 bg-yellow-50 rounded-r-lg">
+                        <div class="flex items-start justify-between mb-3">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 flex items-center space-x-2">
+                                    <span>⚡ Scam Type 3: Embedded Contact/Help Links</span>
+                                </h3>
+                                <p class="text-sm text-gray-600 mt-1">"Click here for help", "Contact Support", etc.</p>
+                            </div>
+                            <div class="text-2xl font-bold text-yellow-600" id="scam3Count">0</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg">
+                            <p class="font-semibold text-gray-900 mb-2">⚠️ What is it?</p>
+                            <p class="text-gray-700 mb-3">These appear as legitimate support links but lead to phishing sites or trigger malware downloads.</p>
+                            <p class="font-semibold text-gray-900 mb-2">🛡️ How to prevent:</p>
+                            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                <li>Search for official contact info separately</li>
+                                <li>Be suspicious of unsolicited "help" offers</li>
+                                <li>Check for HTTPS and valid SSL certificates</li>
+                                <li>Report suspicious emails to your IT department</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-lg p-8 text-white">
+            <h2 class="text-2xl font-bold mb-4 flex items-center space-x-3">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Recommendations for Improvement</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white/20 rounded-lg p-6">
+                    <h3 class="font-bold text-lg mb-3">🎯 Immediate Actions</h3>
+                    <ul class="space-y-2 text-green-50">
+                        <li>• Provide additional training for high-risk employees</li>
+                        <li>• Implement mandatory security awareness courses</li>
+                        <li>• Enable 2FA for all company accounts</li>
+                        <li>• Run monthly phishing simulations</li>
+                    </ul>
+                </div>
+                <div class="bg-white/20 rounded-lg p-6">
+                    <h3 class="font-bold text-lg mb-3">📈 Long-term Strategy</h3>
+                    <ul class="space-y-2 text-green-50">
+                        <li>• Establish a security-first culture</li>
+                        <li>• Regular security policy updates</li>
+                        <li>• Create an incident response plan</li>
+                        <li>• Track improvement metrics quarterly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">© 2025 ThinkBeforeClick. Powered by AWS Serverless Architecture.</p>
+            <p class="text-gray-500 text-sm mt-2">For support, contact: security@thinkbeforeclick.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // API Configuration
+        const API_ENDPOINT = 'https://3ofmk3jge7.execute-api.ap-southeast-1.amazonaws.com/prod';
+        // 从 localStorage 获取登录时保存的 Company ID (adminUsername)
+        // 如果获取不到，则使用 'demo-company-001' 作为后备，以便测试
+        const COMPANY_ID = localStorage.getItem('adminUsername');
+        const API_BASE     = API_ENDPOINT;
+
+        // Load data from localStorage (fallback)
+        let employees = JSON.parse(localStorage.getItem('employees') || '[]');
+        let emailTracking = JSON.parse(localStorage.getItem('emailTracking') || '[]');
+
+        // Set report date
+        document.getElementById('reportDate').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Fetch report data from API
+        async function loadReportFromAPI() {
+            try {
+                const response = await fetch(`${API_ENDPOINT}/company-report/${COMPANY_ID}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    const reportData = await response.json();
+                    console.log('✅ Report data loaded from API:', reportData);
+                    return reportData;
+                } else {
+                    console.warn('⚠️ Failed to load from API, using localStorage');
+                    return null;
+                }
+            } catch (error) {
+                console.error('❌ Error loading report from API:', error);
+                return null;
+            }
+        }
+
+        // Calculate statistics from localStorage (fallback)
+        function calculateStats() {
+            const totalSimulations = emailTracking.length;
+            const openedCount = emailTracking.filter(t => t.opened).length;
+            const openRate = totalSimulations > 0 ? Math.round((openedCount / totalSimulations) * 100) : 0;
+            
+            const clickedEmployees = new Set();
+            let totalClicks = 0;
+            let scam1Clicks = 0;
+            let scam2Clicks = 0;
+            let scam3Clicks = 0;
+
+            emailTracking.forEach(tracking => {
+                if (tracking.scamClicks && tracking.scamClicks.length > 0) {
+                    clickedEmployees.add(tracking.employeeId);
+                    totalClicks += tracking.scamClicks.length;
+                    
+                    tracking.scamClicks.forEach(click => {
+                        if (click.scamType === 'scam1') scam1Clicks++;
+                        if (click.scamType === 'scam2') scam2Clicks++;
+                        if (click.scamType === 'scam3') scam3Clicks++;
+                    });
+                }
+            });
+
+            const clickRate = totalSimulations > 0 ? Math.round((clickedEmployees.size / totalSimulations) * 100) : 0;
+
+            return {
+                totalSimulations,
+                openRate,
+                clickRate,
+                totalClicks,
+                scam1Clicks,
+                scam2Clicks,
+                scam3Clicks
+            };
+        }
+
+        // Update page with API data
+        async function updatePageWithAPIData(reportData) {
+            if (!reportData) return false;
+
+            // Update summary stats
+            if (reportData.summary) {
+                document.getElementById('totalSimulations').textContent = reportData.summary.totalSimulations || 0;
+                document.getElementById('openRate').textContent = (reportData.summary.openRate || 0) + '%';
+                document.getElementById('clickRate').textContent = (reportData.summary.clickRate || 0) + '%';
+                document.getElementById('totalClicks').textContent = reportData.summary.totalScamClicks || 0;
+            }
+
+            // Update scam type counts from mostClickedScams
+            if (reportData.mostClickedScams) {
+                const scam1 = reportData.mostClickedScams.find(s => s.scamType === 'scam1');
+                const scam2 = reportData.mostClickedScams.find(s => s.scamType === 'scam2');
+                const scam3 = reportData.mostClickedScams.find(s => s.scamType === 'scam3');
+                
+                document.getElementById('scam1Count').textContent = scam1 ? scam1.clickCount : 0;
+                document.getElementById('scam2Count').textContent = scam2 ? scam2.clickCount : 0;
+                document.getElementById('scam3Count').textContent = scam3 ? scam3.clickCount : 0;
+            }
+
+            return true;
+        }
+
+        // Initialize page
+        async function initializePage() {
+
+            // ▼▼▼ START: 这是你需要添加的代码块 ▼▼▼
+            try {
+                // 从 localStorage 获取登录时保存的 Company ID (adminUsername)
+                const companyId = localStorage.getItem('adminUsername');
+                if (companyId) {
+                    document.getElementById('displayCompanyId').textContent = companyId;
+                } else {
+                    document.getElementById('displayCompanyId').textContent = 'No Company ID';
+                }
+            } catch (e) {
+                console.error('Failed to load company ID from localStorage', e);
+                document.getElementById('displayCompanyId').textContent = 'Error';
+            }
+            // ▲▲▲ END: 添加的代码块结束 ▲▲▲
+            // Try to load from API first
+            const reportData = await loadReportFromAPI();
+            
+            if (reportData) {
+                // Use API data
+                await updatePageWithAPIData(reportData);
+                
+                // Update charts with API data
+                renderChartsWithAPIData(reportData);
+                
+                // Update employee ranking with API data
+                renderEmployeeRankingFromAPI(reportData);
+            } else {
+                // Fallback to localStorage
+                console.log('Using localStorage data as fallback');
+                const stats = calculateStats();
+                document.getElementById('totalSimulations').textContent = stats.totalSimulations;
+                document.getElementById('openRate').textContent = stats.openRate + '%';
+                document.getElementById('clickRate').textContent = stats.clickRate + '%';
+                document.getElementById('totalClicks').textContent = stats.totalClicks;
+                document.getElementById('scam1Count').textContent = stats.scam1Clicks;
+                document.getElementById('scam2Count').textContent = stats.scam2Clicks;
+                document.getElementById('scam3Count').textContent = stats.scam3Clicks;
+                
+                // Render with localStorage data
+                renderChartsWithLocalStorage(stats);
+                renderEmployeeRankingFromLocalStorage();
+            }
+        }
+
+        // Render charts with API data
+        function renderChartsWithAPIData(reportData) {
+            // Template Performance Chart
+            const templateLabels = [];
+            const openRates = [];
+            const clickRates = [];
+            
+            if (reportData.templatePerformance) {
+                const names = {
+                    'template1': 'DBS Bank',
+                    'template2': 'SingPost',
+                    'template3': 'IRAS Tax',
+                    'template4': 'Shopee Prize',
+                    'template5': 'LinkedIn Job',
+                    'template6': 'SP Group Refund',
+                    'template7': 'LTA Traffic Fine',
+                    'template8': 'PropertyGuru Investment',
+                    'template9': 'NUS Tuition Refund',
+                    'template10': 'Carousell Payment'
+                };
+                
+                reportData.templatePerformance.forEach(template => {
+                    templateLabels.push(names[template.templateId] || template.templateId);
+                    openRates.push(template.openRate || 0);
+                    clickRates.push(template.clickRate || 0);
+                });
+            }
+            
+            const templateCtx = document.getElementById('templateChart').getContext('2d');
+            new Chart(templateCtx, {
+                type: 'bar',
+                data: {
+                    labels: templateLabels.length > 0 ? templateLabels : ['No Data'],
+                    datasets: [{
+                        label: 'Open Rate %',
+                        data: openRates.length > 0 ? openRates : [0],
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                    }, {
+                        label: 'Click Rate %',
+                        data: clickRates.length > 0 ? clickRates : [0],
+                        backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Scam Type Chart
+            const scam1Count = reportData.mostClickedScams?.find(s => s.scamType === 'scam1')?.clickCount || 0;
+            const scam2Count = reportData.mostClickedScams?.find(s => s.scamType === 'scam2')?.clickCount || 0;
+            const scam3Count = reportData.mostClickedScams?.find(s => s.scamType === 'scam3')?.clickCount || 0;
+            
+            const scamCtx = document.getElementById('scamChart').getContext('2d');
+            new Chart(scamCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Urgent Action Buttons', 'Secondary Links', 'Help/Contact Links'],
+                    datasets: [{
+                        data: [scam1Count, scam2Count, scam3Count],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(249, 115, 22, 0.8)',
+                            'rgba(234, 179, 8, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Render employee ranking from API
+        function renderEmployeeRankingFromAPI(reportData) {
+            const rankingContainer = document.getElementById('employeeRanking');
+            
+            if (!reportData.employeeRanking || reportData.employeeRanking.length === 0) {
+                rankingContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p class="text-lg font-medium">Great news! No employees clicked on scam links</p>
+                        <p class="text-sm mt-2">Your team shows excellent security awareness</p>
+                    </div>
+                `;
+                return;
+            }
+
+            rankingContainer.innerHTML = reportData.employeeRanking.map((emp, index) => {
+                const riskLevel = emp.clickedScams >= 3 ? '🔴 High' : emp.clickedScams >= 2 ? '🟡 Medium' : '🟢 Low';
+                const riskColor = emp.clickedScams >= 3 ? 'text-red-600' : emp.clickedScams >= 2 ? 'text-yellow-600' : 'text-green-600';
+                
+                return `
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <div class="flex items-center space-x-4">
+                            <div class="text-2xl font-bold text-gray-400 w-8">#${index + 1}</div>
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                ${emp.name ? emp.name.charAt(0).toUpperCase() : 'U'}
+                            </div>
+                            <div>
+                                <div class="font-semibold text-gray-900">${emp.name || 'Unknown'}</div>
+                                <div class="text-sm text-gray-500">${emp.email || 'N/A'}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-red-600">${emp.clickedScams || 0}</div>
+                                <div class="text-xs text-gray-500">Scam Clicks</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-lg font-semibold ${riskColor}">${riskLevel}</div>
+                                <div class="text-xs text-gray-500">Risk Level</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render charts with localStorage data (fallback)
+        function renderChartsWithLocalStorage(stats) {
+            // Template Performance Chart
+            const templateStats = {};
+            emailTracking.forEach(tracking => {
+                if (!templateStats[tracking.templateId]) {
+                    templateStats[tracking.templateId] = { opened: 0, clicked: 0, total: 0 };
+                }
+                templateStats[tracking.templateId].total++;
+                if (tracking.opened) templateStats[tracking.templateId].opened++;
+                if (tracking.scamClicks && tracking.scamClicks.length > 0) templateStats[tracking.templateId].clicked++;
+            });
+
+            const templateLabels = Object.keys(templateStats).map(t => {
+                const names = {
+                    'template1': 'DBS Bank',
+                    'template2': 'SingPost',
+                    'template3': 'IRAS Tax',
+                    'template4': 'Shopee Prize',
+                    'template5': 'LinkedIn Job',
+                    'template6': 'SP Group Refund',
+                    'template7': 'LTA Traffic Fine',
+                    'template8': 'PropertyGuru Investment',
+                    'template9': 'NUS Tuition Refund',
+                    'template10': 'Carousell Payment'
+                };
+                return names[t] || t;
+            });
+
+            const templateCtx = document.getElementById('templateChart').getContext('2d');
+            new Chart(templateCtx, {
+                type: 'bar',
+                data: {
+                    labels: templateLabels.length > 0 ? templateLabels : ['No Data'],
+                    datasets: [{
+                        label: 'Open Rate %',
+                        data: Object.values(templateStats).map(s => s.total > 0 ? Math.round((s.opened / s.total) * 100) : 0),
+                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                    }, {
+                        label: 'Click Rate %',
+                        data: Object.values(templateStats).map(s => s.total > 0 ? Math.round((s.clicked / s.total) * 100) : 0),
+                        backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Scam Type Chart
+            const scamCtx = document.getElementById('scamChart').getContext('2d');
+            new Chart(scamCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Urgent Action Buttons', 'Secondary Links', 'Help/Contact Links'],
+                    datasets: [{
+                        data: [stats.scam1Clicks, stats.scam2Clicks, stats.scam3Clicks],
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(249, 115, 22, 0.8)',
+                            'rgba(234, 179, 8, 0.8)'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Render employee ranking from localStorage (fallback)
+        function renderEmployeeRankingFromLocalStorage() {
+            const employeeRanks = employees
+                .filter(emp => emp.clickedScams > 0)
+                .sort((a, b) => b.clickedScams - a.clickedScams);
+
+            const rankingContainer = document.getElementById('employeeRanking');
+            
+            if (employeeRanks.length === 0) {
+                rankingContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p class="text-lg font-medium">Great news! No employees clicked on scam links</p>
+                        <p class="text-sm mt-2">Your team shows excellent security awareness</p>
+                    </div>
+                `;
+            } else {
+                rankingContainer.innerHTML = employeeRanks.map((emp, index) => {
+                    const riskLevel = emp.clickedScams >= 3 ? '🔴 High' : emp.clickedScams >= 2 ? '🟡 Medium' : '🟢 Low';
+                    const riskColor = emp.clickedScams >= 3 ? 'text-red-600' : emp.clickedScams >= 2 ? 'text-yellow-600' : 'text-green-600';
+                    
+                    return `
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="flex items-center space-x-4">
+                                <div class="text-2xl font-bold text-gray-400 w-8">#${index + 1}</div>
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                    ${emp.name.charAt(0).toUpperCase()}
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-900">${emp.name}</div>
+                                    <div class="text-sm text-gray-500">${emp.email}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-6">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-red-600">${emp.clickedScams}</div>
+                                    <div class="text-xs text-gray-500">Scam Clicks</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-lg font-semibold ${riskColor}">${riskLevel}</div>
+                                    <div class="text-xs text-gray-500">Risk Level</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+
+        // Initialize page on load
+        window.pageReadyPromise = initializePage();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script>
+        async function makePdfFromElement(id) {
+            const { jsPDF } = window.jspdf;
+            const el = document.getElementById(id);
+            if (!el) throw new Error(`#${id} not found`);
+
+            // 1) Render DOM at higher resolution (but clamp to avoid huge payloads)
+            const dpr   = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+            const scale = Math.min(2, 1.5 * dpr);
+            const canvas = await html2canvas(el, {
+                scale,
+                useCORS: true,
+                backgroundColor: '#fff',
+                letterRendering: true
+            });
+
+            const pdf = new jsPDF({ unit: 'pt', format: 'a4', compress: true });
+            const pageW = pdf.internal.pageSize.getWidth();
+            const pageH = pdf.internal.pageSize.getHeight();
+
+            const targetImgW  = pageW;
+            const pxPerPt     = canvas.width / targetImgW;
+            const pageSlicePx = Math.floor(pageH * pxPerPt);
+
+            let y = 0, first = true;
+            while (y < canvas.height) {
+                const sliceH = Math.min(pageSlicePx, canvas.height - y);
+
+                const pageCanvas = document.createElement('canvas');
+                pageCanvas.width  = canvas.width;
+                pageCanvas.height = sliceH;
+                const ctx = pageCanvas.getContext('2d');
+                ctx.drawImage(canvas, 0, y, canvas.width, sliceH, 0, 0, canvas.width, sliceH);
+
+                const img = pageCanvas.toDataURL('image/jpeg', 0.9);
+
+                if (!first) pdf.addPage();
+                first = false;
+
+                const hOnPage = (sliceH / pxPerPt);
+                pdf.addImage(img, 'JPEG', 0, 0, targetImgW, hOnPage);
+                y += sliceH;
+            }
+
+            return pdf.output('datauristring');
+        }
+
+        // NEW: uploadSnapshot that waits for initializePage()
+        async function uploadSnapshot() {
+            try {
+                // 1) Wait until initializePage() has finished populating data
+                if (window.pageReadyPromise) {
+                    console.log('[snapshot] waiting for pageReadyPromise...');
+                    await window.pageReadyPromise;
+                }
+
+                // 2) Small extra delay to let charts finish any drawing/animations
+                await new Promise(r => setTimeout(r, 500));
+
+                // 3) Now take the screenshot and build PDF
+                const pdfBase64 = await makePdfFromElement('report-section');
+                console.log('[snapshot] size chars', pdfBase64.length);
+
+                // 4) Upload to Lambda
+                const res = await fetch(`${API_BASE}/company-report/${COMPANY_ID}/snapshot/upload`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pdfBase64 })
+                });
+                console.log('[snapshot] upload status', res.status);
+                const j = await res.json().catch(() => ({}));
+                console.log('[snapshot] response', j);
+            } catch (e) {
+                console.warn('snapshot failed:', e);
+            }
+        }
+
+        // Call uploadSnapshot once the whole page (HTML, CSS, JS) is loaded
+        window.addEventListener('load', () => {
+            uploadSnapshot();
+        });
+    </script>
+
+</body>
+</html>
+

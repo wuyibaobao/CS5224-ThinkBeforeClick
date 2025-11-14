@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Feedback - ThinkBeforeClick</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F4FF;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Progress Bar Section */
+        .progress-header {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 16px;
+            height: 16px;
+            color: #fff;
+        }
+
+        .progress-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .progress-count {
+            color: #D1FAE5;
+            font-weight: 700;
+        }
+
+        .progress-bar-container {
+            flex-grow: 1;
+            max-width: 400px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 20px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fff 0%, #D1FAE5 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .skip-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .skip-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Report Display Section */
+        .report-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .report-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+        }
+
+        /* Next Button Section */
+        .next-button-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 200;
+        }
+
+        .next-btn {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            color: #fff;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+        }
+
+        .next-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .next-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .progress-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .progress-bar-container {
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .next-button-container {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .next-btn {
+                padding: 14px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Progress Header -->
+    <div class="progress-header">
+        <div class="progress-info">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                ThinkBeforeClick
+            </div>
+            <div class="progress-text">
+                Learning Feedback: <span class="progress-count" id="progress-counter">1/3</span>
+            </div>
+        </div>
+        
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+
+        <button class="skip-btn" onclick="skipToEnd()">Skip All</button>
+    </div>
+
+    <!-- Report Display -->
+    <div class="report-container">
+        <iframe id="report-frame" class="report-frame" src="" title="Educational Feedback Report"></iframe>
+    </div>
+
+    <!-- Next Button -->
+    <div class="next-button-container">
+        <button class="next-btn" id="next-btn" onclick="nextReport()">
+            <span id="btn-text">Next</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        // Global variables
+        let selectedTemplates = [];
+        let reportFiles = [];
+        let currentIndex = 0;
+
+        // Initialize report viewer on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeReportViewer();
+        });
+
+        /**
+         * Initialize the report viewer session
+         * Load templates from localStorage and convert to report file names
+         */
+        function initializeReportViewer() {
+            // Check if training data exists in localStorage
+            const templatesJSON = localStorage.getItem('selectedTemplates');
+            const indexString = localStorage.getItem('currentIndex');
+
+            if (!templatesJSON || indexString === null) {
+                // No training data found, redirect back to individual page
+                console.error('No training data found. Redirecting to individual page.');
+                alert('No training session found. Please start a new training session.');
+                window.location.href = 'individual.html';
+                return;
+            }
+
+            // Parse training data
+            selectedTemplates = JSON.parse(templatesJSON);
+            currentIndex = parseInt(indexString);
+
+            console.log('Loaded templates:', selectedTemplates);
+            console.log('Starting at index:', currentIndex);
+
+            // Validate data
+            if (!Array.isArray(selectedTemplates) || selectedTemplates.length !== 3) {
+                console.error('Invalid template data');
+                alert('Training data is corrupted. Please start a new session.');
+                window.location.href = 'individual.html';
+                return;
+            }
+
+            // Convert template names to report file names
+            // Example: 'template5.html' -> 'scam_report_5.html'
+            reportFiles = selectedTemplates.map(templateName => {
+                const match = templateName.match(/template(\d+)\.html/);
+                if (match) {
+                    const templateNumber = match[1];
+                    return `scam_report_${templateNumber}.html`;
+                }
+                return null;
+            }).filter(name => name !== null);
+
+            console.log('Corresponding report files:', reportFiles);
+
+            // Validate report files
+            if (reportFiles.length !== 3) {
+                console.error('Failed to generate report file names');
+                alert('Error processing training data. Please start a new session.');
+                window.location.href = 'individual.html';
+                return;
+            }
+
+            // Load the current report
+            loadReport();
+        }
+
+        /**
+         * Load the current report into iframe
+         */
+        function loadReport() {
+            if (currentIndex >= reportFiles.length) {
+                // All reports viewed
+                completeReports();
+                return;
+            }
+
+            const reportName = reportFiles[currentIndex];
+            const reportPath = `../feedback/${reportName}`;
+
+            console.log(`Loading report ${currentIndex + 1}/3: ${reportName}`);
+
+            // Update iframe source
+            const iframe = document.getElementById('report-frame');
+            iframe.src = reportPath;
+
+            // Update progress display
+            updateProgress();
+        }
+
+        /**
+         * Update progress bar and counter
+         */
+        function updateProgress() {
+            const progressCounter = document.getElementById('progress-counter');
+            const progressBar = document.getElementById('progress-bar');
+            const btnText = document.getElementById('btn-text');
+
+            // Update counter text
+            progressCounter.textContent = `${currentIndex + 1}/3`;
+
+            // Update progress bar width
+            const progressPercentage = ((currentIndex + 1) / 3) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+
+            // Update button text for last report
+            if (currentIndex === 2) {
+                btnText.textContent = 'Complete';
+            } else {
+                btnText.textContent = 'Next';
+            }
+        }
+
+        /**
+         * Handle Next button click
+         * Move to next report or complete all reports
+         */
+        function nextReport() {
+            currentIndex++;
+
+            // Save updated index to localStorage
+            localStorage.setItem('currentIndex', currentIndex.toString());
+
+            if (currentIndex >= reportFiles.length) {
+                // All reports viewed
+                completeReports();
+            } else {
+                // Load next report
+                loadReport();
+            }
+        }
+
+        /**
+         * Complete all reports and redirect to individual page
+         */
+        function completeReports() {
+            console.log('All reports viewed! Completing training...');
+            
+            // Clear training data
+            localStorage.removeItem('selectedTemplates');
+            localStorage.removeItem('currentIndex');
+
+            // Redirect to individual page with completion flag
+            window.location.href = 'individual.html?completed=true';
+        }
+
+        /**
+         * Skip all remaining reports and complete training
+         */
+        function skipToEnd() {
+            const confirmed = confirm('Are you sure you want to skip the educational feedback?\n\nIt is recommended to review the feedback to improve your phishing detection skills.');
+            
+            if (confirmed) {
+                // Clear training data
+                localStorage.removeItem('selectedTemplates');
+                localStorage.removeItem('currentIndex');
+                
+                // Redirect to individual page with completion flag
+                window.location.href = 'individual.html?completed=true';
+            }
+        }
+    </script>
+
+</body>
+</html>
+

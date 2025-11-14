@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Dashboard - ThinkBeforeClick</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        secondary: '#10B981',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold text-gray-800">ThinkBeforeClick</span>
+                    <span class="text-sm text-gray-500">Enterprise</span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="../index.html" class="text-gray-600 hover:text-gray-900">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </a>
+                     <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            A
+                        </div>
+                        <span class="text-sm font-medium" id="adminEmail">Loading...</span>
+                        <span class="text-sm font-medium" id="companyIdDisplay">Company ID: Loading...</div>
+                    </button>
+                    <button onclick="logout()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold text-sm">
+                            Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Phishing Simulation Dashboard</h1>
+            <p class="text-gray-600">Manage employees and send custom phishing simulations to test security awareness</p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-600 text-sm font-medium">Total Employees</span>
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-900" id="totalEmployees">0</div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-600 text-sm font-medium">Emails Sent</span>
+                    <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-900" id="emailsSent">0</div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-600 text-sm font-medium">Opened Rate</span>
+                    <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-900" id="openRate">0%</div>
+            </div>
+
+            <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-gray-600 text-sm font-medium">Click Rate</span>
+                    <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="text-3xl font-bold text-gray-900" id="clickRate">0%</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column: Employee Management -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-2xl font-bold text-gray-900">Employee Management</h2>
+                            <button onclick="showAddEmployeeModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center space-x-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                </svg>
+                                <span>Add Employee</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="p-6">
+                        <!-- Search Bar -->
+                        <div class="mb-6">
+                            <div class="relative">
+                                <input type="text" id="searchInput" placeholder="Search employees by name or email..." class="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" onkeyup="searchEmployees()">
+                                <svg class="w-5 h-5 text-gray-400 absolute left-4 top-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Employee List -->
+                        <div class="space-y-3" id="employeeList">
+                            <div class="text-center py-12 text-gray-400">
+                                <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <p class="text-lg font-medium">No employees added yet</p>
+                                <p class="text-sm mt-2">Click "Add Employee" to get started</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Send Phishing Simulation -->
+            <div class="lg:col-span-1">
+                <div class="bg-gradient-to-br from-blue-600 to-purple-700 rounded-xl shadow-lg p-6 text-white mb-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Send Phishing Simulation</h3>
+                    </div>
+                    <p class="text-blue-100 text-sm mb-6">Test your employees' security awareness with realistic phishing scenarios</p>
+                    
+                    <form id="sendPhishingForm" onsubmit="sendPhishingEmail(event)">
+                        <!-- Employee Selection -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium mb-2">Select Employee</label>
+                            <select id="employeeSelect" required class="w-full px-4 py-3 rounded-lg text-gray-900 border-0 focus:ring-2 focus:ring-blue-300">
+                                <option value="">Choose an employee...</option>
+                            </select>
+                        </div>
+
+                        <!-- Template Selection -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium mb-3">Select Phishing Template</label>
+                            <div class="space-y-2">
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template1" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">DBS Bank Alert</div>
+                                        <div class="text-xs text-blue-100">Account security verification</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template2" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">SingPost Delivery</div>
+                                        <div class="text-xs text-blue-100">Parcel delivery notification</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template3" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">IRAS Tax Refund</div>
+                                        <div class="text-xs text-blue-100">Tax refund pending</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template4" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">Shopee Prize</div>
+                                        <div class="text-xs text-blue-100">Lucky draw winner notification</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template5" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">LinkedIn Job Offer</div>
+                                        <div class="text-xs text-blue-100">Urgent job opportunity</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template6" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">SP Group Utilities Refund</div>
+                                        <div class="text-xs text-blue-100">Utilities bill refund notice</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template7" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">LTA Traffic Fine</div>
+                                        <div class="text-xs text-blue-100">Traffic offence payment notice</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template8" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">PropertyGuru Investment</div>
+                                        <div class="text-xs text-blue-100">Exclusive property investment</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template9" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">NUS Tuition Refund</div>
+                                        <div class="text-xs text-blue-100">University fee refund notice</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center space-x-3 bg-white/10 p-3 rounded-lg cursor-pointer hover:bg-white/20 transition">
+                                    <input type="radio" name="template" value="template10" required class="w-4 h-4">
+                                    <div class="flex-1">
+                                        <div class="font-medium">Carousell Payment</div>
+                                        <div class="text-xs text-blue-100">Seller payment notification</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-white text-blue-600 font-bold py-3 rounded-lg hover:bg-gray-100 transition flex items-center justify-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                            </svg>
+                            <span>Send Phishing Email</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Refresh Data Button -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">Sync Data</h3>
+                    <p class="text-gray-600 text-sm mb-4">Refresh statistics from DynamoDB to see latest tracking data</p>
+                    <button onclick="manualRefresh()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        <span id="refreshButtonText">Refresh Data from API</span>
+                    </button>
+                    <p class="text-xs text-gray-500 mt-2 text-center">Auto-refreshes every 10 seconds</p>
+                </div>
+
+                <!-- View Report Button -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-3">Analytics & Reports</h3>
+                    <p class="text-gray-600 text-sm mb-4">View detailed analytics on employee vulnerability and security awareness</p>
+                    <button onclick="window.location.href='company-report.html'" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-3 rounded-lg hover:from-green-600 hover:to-emerald-700 transition flex items-center justify-center space-x-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        <span>View Company Report</span>
+                    </button>
+                
+                    <!-- View Past Reports Button -->
+                    <div class="w-full flex justify-center">
+                    <div id="report-history-wrapper" class="relative mt-3 w-full max-w-lg mx-auto">
+                        <button id="btn-history" type="button"
+                        class="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold py-3 rounded-lg
+                                hover:from-green-600 hover:to-emerald-700 transition relative text-center pl-12 pr-10">
+                        <!-- left icon -->
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </span>
+
+                        <!-- centered label -->
+                        <span class="inline-block">View Past Company Reports</span>
+
+                        <!-- right chevron (keeps your JS rotate) -->
+                        <svg id="history-chevron"
+                            class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 transition-transform"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 9l-7 7-7-7" />
+                        </svg>
+                        </button>
+
+                        <!-- dropdown panel -->
+                        <div id="history-panel"
+                            class="hidden absolute left-0 right-0 z-20 mt-2 w-full rounded-xl shadow-lg bg-white ring-1 ring-black/5 max-h-64 overflow-auto">
+                        <div id="history-loading" class="px-4 py-3 text-sm text-gray-500">Loading…</div>
+                        <ul id="history-list" class="py-1"></ul>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Employee Modal -->
+    <div id="addEmployeeModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Add New Employee</h3>
+            <form id="addEmployeeForm" onsubmit="addEmployee(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Employee Name</label>
+                    <input type="text" id="employeeName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="John Doe">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                    <input type="email" id="employeeEmail" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="john.doe@company.com">
+                </div>
+                <div class="flex space-x-3">
+                    <button type="button" onclick="hideAddEmployeeModal()" class="flex-1 bg-gray-200 text-gray-700 font-medium py-3 rounded-lg hover:bg-gray-300 transition">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
+                        Add Employee
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="hidden fixed top-6 right-6 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 flex items-center space-x-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <span id="toastMessage"></span>
+    </div>
+
+    <script>
+        // Configuration - Replace with your actual API Gateway endpoint
+        const API_ENDPOINT = 'https://3ofmk3jge7.execute-api.ap-southeast-1.amazonaws.com/prod';
+        const API_BASE = API_ENDPOINT;
+        //const COMPANY_ID = 'demo-company-001'; // In production, this would come from authentication
+        let COMPANY_ID = '';
+        let ADMIN_EMAIL = '';
+
+        function getUserInfo() {
+            try {
+                COMPANY_ID = localStorage.getItem('adminUsername');
+                ADMIN_EMAIL = localStorage.getItem('userEmail');
+                
+                console.log('Retrieved from localStorage - Company ID:', COMPANY_ID, 'Admin Email:', ADMIN_EMAIL);
+                
+                // 更新UI显示
+                if (document.getElementById('adminEmail')) {
+                    document.getElementById('adminEmail').textContent = ADMIN_EMAIL || 'Admin';
+                }
+                if (document.getElementById('companyIdDisplay')) {
+                    document.getElementById('companyIdDisplay').textContent = `Company ID: ${COMPANY_ID || 'Loading...'}`;
+                }
+                if (document.getElementById('companyIdInfo')) {
+                    document.getElementById('companyIdInfo').textContent = COMPANY_ID || 'Loading...';
+                }
+                
+                return true;
+                
+            } catch (error) {
+                console.error('❌ Error getting user info:', error);
+                return false;
+            }
+        }
+        // In-memory cache (will reload from DynamoDB on page load)
+        let employees = [];
+        let employeesMap = {}; // Map for quick lookup by ID
+
+        // Load employees from API
+        async function loadEmployees() {
+            try {
+                const response = await fetch(`${API_ENDPOINT}/employees/${COMPANY_ID}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ Employees loaded from API:', data);
+                    
+                    employees = data.employees || [];
+                    
+                    // Build employee map for quick lookup
+                    employeesMap = {};
+                    employees.forEach(emp => {
+                        employeesMap[emp.employeeId] = emp;
+                    });
+                    
+                    return true;
+                } else {
+                    console.warn('⚠️ Failed to load employees from API');
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ Error loading employees from API:', error);
+                return false;
+            }
+        }
+
+        // Refresh data from API (statistics and update employee data)
+        async function refreshDataFromAPI() {
+            try {
+                // Call the company report API to get latest data
+                const response = await fetch(`${API_ENDPOINT}/company-report/${COMPANY_ID}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    const reportData = await response.json();
+                    console.log('✅ Data refreshed from API:', reportData);
+                    
+                    // Update statistics from API data
+                    if (reportData.summary) {
+                        document.getElementById('emailsSent').textContent = reportData.summary.totalSimulations || 0;
+                        document.getElementById('openRate').textContent = (reportData.summary.openRate || 0) + '%';
+                        document.getElementById('clickRate').textContent = (reportData.summary.clickRate || 0) + '%';
+                    }
+                    
+                    // Update employee data from API (complete data from Employees table)
+                    if (reportData.employeeRanking && reportData.employeeRanking.length > 0) {
+                        employees = reportData.employeeRanking;
+                        
+                        // Rebuild employee map
+                        employeesMap = {};
+                        employees.forEach(emp => {
+                            employeesMap[emp.employeeId] = emp;
+                        });
+                        
+                        renderEmployeeList();
+                    }
+                    
+                    return true;
+                } else {
+                    console.warn('⚠️ Failed to refresh from API');
+                    return false;
+                }
+            } catch (error) {
+                console.error('❌ Error refreshing data from API:', error);
+                return false;
+            }
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Load employees from API first
+             const userInfoLoaded = getUserInfo();
+            
+            if (!userInfoLoaded) {
+                console.error('❌ Failed to load user information');
+                window.location.href = '../login.html';
+                return;
+            }
+            await loadEmployees();
+            
+            // Update UI
+            updateStats();
+            renderEmployeeList();
+            updateEmployeeSelect();
+            
+            // Refresh statistics from API
+            await refreshDataFromAPI();
+            
+            // Auto-refresh every 10 seconds
+            setInterval(async () => {
+                await refreshDataFromAPI();
+            }, 10000);
+        });
+
+        // Manual refresh function
+        async function manualRefresh() {
+            const button = document.getElementById('refreshButtonText');
+            const originalText = button.textContent;
+            button.textContent = '🔄 Refreshing...';
+            
+            const success = await refreshDataFromAPI();
+            
+            if (success) {
+                button.textContent = '✅ Data Updated!';
+                showToast('Data refreshed successfully from DynamoDB!');
+            } else {
+                button.textContent = '⚠️ Refresh Failed';
+                showToast('Failed to refresh. Check console for details.');
+            }
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        // Show/Hide Modal
+        function showAddEmployeeModal() {
+            document.getElementById('addEmployeeModal').classList.remove('hidden');
+        }
+
+        function hideAddEmployeeModal() {
+            document.getElementById('addEmployeeModal').classList.add('hidden');
+            document.getElementById('addEmployeeForm').reset();
+        }
+
+        // Add Employee
+        async function addEmployee(event) {
+            event.preventDefault();
+            const name = document.getElementById('employeeName').value;
+            const email = document.getElementById('employeeEmail').value;
+
+            try {
+                // Call API to add employee to DynamoDB
+                const response = await fetch(`${API_ENDPOINT}/employees`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        companyId: COMPANY_ID,
+                        name: name,
+                        email: email
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    // Add to local cache
+                    const newEmployee = result.employee;
+                    employees.push(newEmployee);
+                    employeesMap[newEmployee.employeeId] = newEmployee;
+
+                    hideAddEmployeeModal();
+                    renderEmployeeList();
+                    updateEmployeeSelect();
+                    updateStats();
+                    showToast('Employee added successfully!');
+                } else {
+                    if (response.status === 409) {
+                        alert('Employee with this email already exists!');
+                    } else {
+                        throw new Error(result.error || 'Failed to add employee');
+                    }
+                }
+            } catch (error) {
+                console.error('Error adding employee:', error);
+                alert(`Failed to add employee: ${error.message}\n\nPlease check:\n- API Gateway configuration\n- Lambda function deployment\n- DynamoDB permissions`);
+            }
+        }
+
+        // Render Employee List
+        function renderEmployeeList() {
+            const listContainer = document.getElementById('employeeList');
+            
+            if (employees.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <p class="text-lg font-medium">No employees added yet</p>
+                        <p class="text-sm mt-2">Click "Add Employee" to get started</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = employees.map(emp => `
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition border border-gray-200">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            ${emp.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-900">${emp.name}</div>
+                            <div class="text-sm text-gray-500">${emp.email}</div>
+                            <div class="flex items-center space-x-4 mt-1 text-xs text-gray-500">
+                                <span>📧 Sent: ${emp.sentEmails || 0}</span>
+                                <span>👁️ Opened: ${emp.openedEmails || 0}</span>
+                                <span>⚠️ Clicked: ${emp.clickedScams || 0}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="deleteEmployee('${emp.employeeId}')" class="text-red-500 hover:text-red-700">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Update Employee Select
+        function updateEmployeeSelect() {
+            const select = document.getElementById('employeeSelect');
+            select.innerHTML = '<option value="">Choose an employee...</option>' + 
+                employees.map(emp => `<option value="${emp.employeeId}">${emp.name} (${emp.email})</option>`).join('');
+        }
+
+        // Delete Employee
+        function deleteEmployee(id) {
+            if (confirm('Are you sure you want to delete this employee? Note: Related email tracking data will still be retained.')) {
+                // Remove from local cache
+                employees = employees.filter(emp => emp.employeeId !== id);
+                delete employeesMap[id];
+                
+                // Note: In production, you should also call DELETE API
+                // For now, just remove from local display
+                
+                renderEmployeeList();
+                updateEmployeeSelect();
+                updateStats();
+                showToast('Employee deleted (only front-end cache)');
+            }
+        }
+
+        // Search Employees
+        function searchEmployees() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = employees.filter(emp => 
+                emp.name.toLowerCase().includes(searchTerm) || 
+                emp.email.toLowerCase().includes(searchTerm)
+            );
+            
+            const listContainer = document.getElementById('employeeList');
+            if (filtered.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <p class="text-lg font-medium">No employees found</p>
+                        <p class="text-sm mt-2">Try a different search term</p>
+                    </div>
+                `;
+                return;
+            }
+
+            listContainer.innerHTML = filtered.map(emp => `
+                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition border border-gray-200">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            ${emp.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-900">${emp.name}</div>
+                            <div class="text-sm text-gray-500">${emp.email}</div>
+                            <div class="flex items-center space-x-4 mt-1 text-xs text-gray-500">
+                                <span>📧 Sent: ${emp.sentEmails || 0}</span>
+                                <span>👁️ Opened: ${emp.openedEmails || 0}</span>
+                                <span>⚠️ Clicked: ${emp.clickedScams || 0}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="deleteEmployee('${emp.employeeId}')" class="text-red-500 hover:text-red-700">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Send Phishing Email
+        async function sendPhishingEmail(event) {
+            event.preventDefault();
+            
+            const employeeId = document.getElementById('employeeSelect').value;
+            const template = document.querySelector('input[name="template"]:checked').value;
+            
+            if (!employeeId) {
+                alert('Please select an employee');
+                return;
+            }
+
+            const employee = employeesMap[employeeId];
+            if (!employee) {
+                alert('Selected employee not found');
+                return;
+            }
+
+            // Call API Gateway to send real email via Lambda + SES
+            try {
+                const response = await fetch(`${API_ENDPOINT}/send-phishing`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        companyId: COMPANY_ID,
+                        employeeId: employeeId,
+                        employeeName: employee.name,
+                        employeeEmail: employee.email,
+                        templateId: template
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Real email sent successfully!
+                    alert(`✅ Phishing email sent successfully!\n\nEmployee: ${employee.name} (${employee.email})\nTemplate: ${template}\n\n📧 Email sent via Amazon SES\n🔗 Tracking ID: ${result.trackingId}\n\nThe employee will receive the phishing simulation email shortly.`);
+                } else {
+                    throw new Error(result.error || 'Failed to send email');
+                }
+            } catch (error) {
+                console.error('Error sending phishing email:', error);
+                
+                // Fallback to demo mode
+                const phishingLink = `${window.location.origin}/templates/${template}.html?tid=${trackingId}`;
+                alert(`⚠️ Failed to send real email (falling back to demo mode)\n\nError: ${error.message}\n\n🔗 Demo Link (copy and open in new tab):\n${phishingLink}\n\nPossible issues:\n- Lambda function not deployed\n- API Gateway not configured\n- SES not verified or in sandbox mode\n- Check browser console for details`);
+            }
+
+            // Reset form
+            document.getElementById('sendPhishingForm').reset();
+            updateStats();
+            renderEmployeeList();
+            showToast('Phishing email sent successfully!');
+        }
+
+        // Update Statistics
+        function updateStats() {
+            document.getElementById('totalEmployees').textContent = employees.length;
+            // Note: emailsSent, openRate, clickRate are updated by refreshDataFromAPI()
+        }
+
+        // Show Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('successToast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Report History Dropdown
+
+        (() => {
+
+        // --- element refs ---
+        const wrap    = document.getElementById('report-history-wrapper');
+        const btn     = document.getElementById('btn-history');
+        const panel   = document.getElementById('history-panel');
+        const listEl  = document.getElementById('history-list');
+        const loading = document.getElementById('history-loading');
+        const chev    = document.getElementById('history-chevron');
+        if (!wrap || !btn || !panel || !listEl || !loading || !chev) return;
+
+        let fetching = false;
+
+        function openPanel() { panel.classList.remove('hidden'); chev.style.transform = 'rotate(180deg)'; }
+        function closePanel() { panel.classList.add('hidden'); chev.style.transform = ''; }
+        function isOpen() { return !panel.classList.contains('hidden'); }
+
+        function renderEmpty(text) {
+            listEl.replaceChildren();
+            const li = document.createElement('li');
+            li.innerHTML = `<div class="px-4 py-3 text-sm text-gray-500">${text}</div>`;
+            listEl.appendChild(li);
+        }
+
+        function renderList(items) {
+            // items can be [{name,...}] or raw strings
+            listEl.replaceChildren();
+
+            if (!Array.isArray(items) || items.length === 0) {
+                renderEmpty('No past reports yet');
+                return;
+            }
+
+            items.forEach((it) => {
+                const name =
+                (it && (it.name || it.filename || it.key)) ? String(it.name || it.filename || it.key).trim()
+                                                            : String(it || '').trim();
+
+                if (!name) return; // skip empties
+
+                const li = document.createElement('li');
+
+                const row = document.createElement('button');
+                row.type = 'button';
+                row.className =
+                'w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 focus:bg-emerald-50';
+                row.textContent = name;
+                row.dataset.filename = name;
+
+                row.addEventListener('click', (e) => {
+                e.preventDefault();
+                const file = row.dataset.filename;
+
+                // Pass BOTH path and query params so backend always receives them
+                const url =
+                    `${API_BASE}/company-report/${encodeURIComponent(COMPANY_ID)}/download` +
+                    `?name=${encodeURIComponent(file)}&companyId=${encodeURIComponent(COMPANY_ID)}`;
+
+                // Debug (optional): console.log('[download]', url);
+                window.open(url, '_blank');
+                });
+
+                li.appendChild(row);
+                listEl.appendChild(li);
+            });
+            }
+
+        // --- fetch + PRINT raw and parsed API result, then render filenames ---
+        async function fetchHistory() {
+            if (fetching) return;
+            fetching = true;
+            loading.classList.remove('hidden');
+            renderEmpty('Loading…');
+
+            try {
+            const endpoint =`${API_BASE}/company-report/${encodeURIComponent(COMPANY_ID)}/history` + `?companyId=${encodeURIComponent(COMPANY_ID)}`;
+            const res = await fetch(endpoint, { method: 'GET', headers: { 'Accept': 'application/json' } });
+
+            const raw = await res.text();
+
+            // 🔍 PRINT EVERYTHING
+            console.groupCollapsed('History API debug');
+            console.log('Endpoint:', endpoint);
+            console.log('HTTP:', res.status, res.statusText);
+            console.log('Raw text:', raw);
+
+            let parsed;
+            try { parsed = JSON.parse(raw); } catch (e) { parsed = null; }
+            console.log('Parsed JSON:', parsed);
+            console.log('Parsed type:', parsed && typeof parsed, 'Array?', Array.isArray(parsed));
+            console.log('parsed.body type:', parsed && parsed.body !== undefined ? typeof parsed.body : '(no body)');
+
+            // derive array from common shapes
+            let arr = [];
+            if (Array.isArray(parsed)) {
+                arr = parsed;
+            } else if (parsed && typeof parsed === 'object') {
+                if (Array.isArray(parsed.body)) {
+                arr = parsed.body;
+                } else if (typeof parsed.body === 'string') {
+                try { arr = JSON.parse(parsed.body); } catch (e) { console.error('Failed to parse body JSON:', e); arr = []; }
+                }
+            }
+
+            console.log('Final array?', Array.isArray(arr), 'length:', Array.isArray(arr) ? arr.length : 'N/A');
+            if (Array.isArray(arr) && arr.length) console.log('First item:', arr[0]);
+            console.groupEnd();
+
+            if (!Array.isArray(arr) || arr.length === 0) {
+                renderEmpty('No past reports yet');
+            } else {
+                // keep only the name field for display
+                const items = arr.map(r => ({ name: r.name || r.filename || r.key || String(r) }));
+                renderList(items);
+            }
+            } catch (err) {
+            console.error('history fetch failed:', err);
+            renderEmpty('Failed to load history');
+            } finally {
+            loading.classList.add('hidden');
+            fetching = false;
+            }
+        }
+
+        // Close when clicking outside the widget
+        document.addEventListener('click', (e) => { if (isOpen() && !wrap.contains(e.target)) closePanel(); });
+        panel.addEventListener('click', (e) => e.stopPropagation());
+        btn.addEventListener('click', (e) => e.stopPropagation());
+
+        // Toggle panel; when opening, ALWAYS refresh
+        btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (isOpen()) closePanel();
+            else { openPanel(); await fetchHistory(); }
+        });
+        })();
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = '../index.html';
+        }
+    </script>
+</body>
+</html>
+
