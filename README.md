@@ -14,7 +14,7 @@ This project is designed to tackle the growing risk of phishing and online scams
 ## 2. 🚀 Core Features
 
 * **Dual User System**: Differentiates between Individual and Enterprise users with distinct features.
-* **Enterprise Registration**: Supports enterprise admins registering with a unique "Company ID" (`custom:admin_username`).
+* **Enterprise Registration**: Supports enterprise admins registering with a unique "Company ID".
 * **Admin Dashboard**:
     * Real-time analytics (Emails Sent, Open Rate, Click Rate).
     * Employee management (Add, View).
@@ -35,9 +35,9 @@ This project is designed to tackle the growing risk of phishing and online scams
 
 | Admin Dashboard | Phishing Email (DBS Template) |
 | :---: | :---: |
-| <img src="docs/image_e7f1e3.jpg" width="400"> | <img src="docs/image_e878ec.jpg" width="400"> |
+| <img src="Screenshots/Dashboard.png" width="400"> | <img src="Screenshots/Phishing Template(DBS).png" width="400"> |
 | **"Teachable Moment" Page** | **Final Analytics Report** |
-| <img src="docs/image_e87962.jpg" width="400"> | <img src="docs/image_e8de21.jpg" width="400"> |
+| <img src="Screenshots/Teachable Moment.png" width="400"> | <img src="Screenshots/Report.png" width="400"> |
 
 ---
 
@@ -46,11 +46,11 @@ This project is designed to tackle the growing risk of phishing and online scams
 This project is built on a 100% AWS Serverless architecture, ensuring high availability, automatic scaling, and minimal operational overhead.
 
 ### Architecture Diagram
-(Embed your architecture diagram image here from your `ThinkBeforeClick-Preliminary-1.pdf`)
+<img src="Screenshots/architecture.png" width="400">
 
 ### Tech Stack
-* **Frontend**: HTML5, CSS (TailwindCSS), JavaScript
-* **Frontend Hosting**: **AWS S3** (For storing static website files)
+* **Frontend**: HTML5, CSS , JavaScript
+* **Frontend Hosting**: **AWS S3** (For storing static website files and Reports)
 * **CDN**: **AWS CloudFront** (For global content delivery and caching)
 * **Identity**: **Amazon Cognito** (Manages all user registration, login, and user pools)
 * **Backend API**: **Amazon API Gateway** (Provides RESTful API endpoints)
@@ -79,3 +79,36 @@ This section maps our core features directly to the backend Lambda functions and
 ---
 
 ## 6. 📁 Codebase Structure
+
+Our project repository (`CS5224--ThinkBeforeClick`) is organized into the following key directories:
+
+* **`/Lambda/`**
+    * **Purpose:** Contains all backend business logic. Each `.py` file inside corresponds to a separate AWS Lambda function (e.g., `register.py`, `login.py`, `send_phishing_email.py`, etc.).
+
+* **`/thinkbeforeclick-frontend-sg/`**
+    * **Purpose:** This is the main frontend directory, containing all client-side HTML, CSS, JavaScript, and assets that are served to the user.
+    * **Key Sub-directories:**
+        * `enterprise/`: Contains admin-facing pages, such as `dashboard.html` and `company-report.html`.
+        * `feedback/`: (Contains "Teachable Moment" forms/pages for users).
+        * `individual/`: (Contains pages for individual user training modules).
+        * `templates/`: Holds the static HTML phishing email templates (e.g., `template1.html` for DBS Bank).
+    * **Key Root Files:**
+        * `index.html`: The main project landing page.
+        * `login.html`: The main login and registration page.
+        * `style.css`: The primary stylesheet for the frontend.
+        * `p1.png`: Project logo or image asset.
+
+* **`/thinkbeforeclick-backend-sg/`**
+    * **Purpose:** This directory is used for storing generated backend assets, such as the company report PDFs.
+
+* **`README.md`**
+    * **Purpose:** (This file) The main project documentation, summarizing the project for the code repository.
+
+
+## 7. 👥 Team Members
+
+* Ni Chenyu (A0297091W)
+* Ren Yilun (A0239112N)
+* Wu Yijun (A0318466W)
+* Yu Jiahui (A0296924M)
+* Zou Zhihua (A0333779M)
