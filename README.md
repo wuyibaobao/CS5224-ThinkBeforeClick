@@ -1,6 +1,7 @@
 # 🛡️ ThinkBeforeClick - Phishing Simulation & Security Awareness Platform
 
 **Project: CS5224 Cloud Computing (AY25/26 Semester 1) - Group Project**
+
 **Group Nickname: ThinkBeforeClick**
 
 ---
