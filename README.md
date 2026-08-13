@@ -105,11 +105,3 @@ Our project repository (`CS5224--ThinkBeforeClick`) is organized into the follow
 * **`README.md`**
     * **Purpose:** (This file) The main project documentation, summarizing the project for the code repository.
 
-
-## 7. 👥 Team Members
-
-* Ni Chenyu (A0297091W)
-* Ren Yilun (A0239112N)
-* Wu Yijun (A0318466W)
-* Yu Jiahui (A0296924M)
-* Zou Zhihua (A0333779M)
